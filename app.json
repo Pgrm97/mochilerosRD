@@ -1,0 +1,12 @@
+{
+  "name": "mochilerosRD",
+  "displayName": "mochilerosRD",
+  "expo": {
+    "name": "mochilerosRD",
+    "slug": "mochilerosRD",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
