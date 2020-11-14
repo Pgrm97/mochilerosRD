@@ -1,6 +1,13 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import RecommendationCard from './CardComponent';
+import Intro from './IntroComponent';
+import { Text } from 'react-native-elements'
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
 
 class Main extends Component {
     constructor(props){
@@ -12,11 +19,20 @@ class Main extends Component {
 
     render() {
         return(
-            <View style={styles.container}>
-                <Text>Welcome to Mochileros RD!</Text>
-                <Image source={{uri: 'https://cdn0.iconfinder.com/data/icons/tutor-icon-set/512/Backpack_icon-512.png'}}
-                style={{width: 200, height: 200}} />
-            </View>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Intro"
+                        component={Intro}
+                    />
+                    <Stack.Screen
+                        name="Card"
+                        component={RecommendationCard}
+                        options={{title:'Initial Recommendation'}}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+            
         )
     }
 }
