@@ -12,7 +12,7 @@ function Intro(props) {
             <Button
               style={{marginTop: 50}}
               title="Continue"
-              onPress={ () => props.navigation.navigate('Card', { name: 'Jane' })}
+              onPress={ () => props.navigation.navigate('Questionaire')}
               type="solid"
             />
         </View>

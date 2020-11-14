@@ -8,7 +8,7 @@ function RecommendationCard(props) {
         <View style={ styles.container }>
             <Text h4>How would you rate?</Text>
             <Card>
-                <Card.Title><Text h3>Sunny Weekend in Playa Dorada</Text></Card.Title>
+                <Card.Title><Text h3 style = {textStyles.italic}>Sunny ☀️ Weekend</Text><Text h3> in Playa Dorada</Text></Card.Title>
                 <Card.Image source={{uri:
                         'https://lh5.googleusercontent.com/p/AF1QipNLkGOoA8SDNECWJ_CrkLmwIlD27yM6rUwVE5w=s1160-k-no'}}/>
                 
@@ -27,5 +27,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const textStyles = StyleSheet.create({
+  bold: {fontWeight: 'bold'},
+  italic: {fontStyle: 'italic', color: 'blue'},
+  underline: {textDecorationLine: 'underline'}
+})
 
 export default RecommendationCard;
