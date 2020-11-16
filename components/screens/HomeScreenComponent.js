@@ -15,7 +15,7 @@ class HomeScreen extends Component {
                 <Text h3>Puerto Plata - Recommendations</Text>
                 <Button
                     title="Give me recommendations!"
-                    //onPress={ () => this.props.navigation.navigate('RecommendedList')}
+                    onPress={ () => this.props.navigation.navigate('RecommendationScreen')}
                     type="solid"
                 />
             </View>

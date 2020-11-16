@@ -4,11 +4,12 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements'
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import RecommendationCard from './CardComponent';
 import Intro from './screens/IntroComponent';
 import Description from './DescriptionComponent';
 import Questionaire from './screens/QuestionaireComponent';
 import HomeScreen from './screens/HomeScreenComponent';
+import InitialRatingScreen from './screens/InitialRatingScreenComponent';
+import RecommendationScreen from './screens/RecommendationScreenComponent'
 
 const Stack = createStackNavigator();
 
@@ -37,14 +38,19 @@ class Main extends Component {
                         component={Description}
                     />
                     <Stack.Screen
-                        name="Card"
-                        component={RecommendationCard}
-                        options={{title:'Initial Recommendation'}}
+                        name="InitialRating"
+                        component={InitialRatingScreen}
+                        options={{title:'Initial Ratings'}}
                     />
                     <Stack.Screen
                         name="HomeScreen"
                         component={HomeScreen}
                         options={{title:'Home Screen'}}
+                    />
+                    <Stack.Screen
+                        name="RecommendationScreen"
+                        component={RecommendationScreen}
+                        options={{title:'Recommendations'}}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
