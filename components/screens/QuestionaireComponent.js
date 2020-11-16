@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom';
-import { Image, View, StyleSheet, TextInput } from 'react-native'
+import { Image, View, StyleSheet } from 'react-native'
 import { Text, Button } from 'react-native-elements'
+import UselessTextInput from '../TextInputComponent';
 
 class Questionaire extends Component{
     constructor(props){
@@ -11,21 +12,14 @@ class Questionaire extends Component{
             nameQuestion: "What's your name?"
         }
         
-    }   
+    }
 
-    render(){
-        // const [value, onChangeText] = React.useState('');
-        
+    render(){       
         return(
             <View style={ styles.container }>
                 <Text h4>{this.state.nameQuestion}{'\n'}</Text>
-                {/* <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => onChangeText(text)}
-                    value={value}
-                /> */}
+                <UselessTextInput/>
                 <Button
-                    style={{marginTop: 50}}
                     title="Continue"
                     onPress={ () => this.props.navigation.navigate('Description')}
                     type="solid"

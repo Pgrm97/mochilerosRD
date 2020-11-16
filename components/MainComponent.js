@@ -5,9 +5,10 @@ import { Text } from 'react-native-elements'
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RecommendationCard from './CardComponent';
-import Intro from './IntroComponent';
+import Intro from './screens/IntroComponent';
 import Description from './DescriptionComponent';
-import Questionaire from './QuestionaireComponent';
+import Questionaire from './screens/QuestionaireComponent';
+import HomeScreen from './screens/HomeScreenComponent';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,11 @@ class Main extends Component {
                         name="Card"
                         component={RecommendationCard}
                         options={{title:'Initial Recommendation'}}
+                    />
+                    <Stack.Screen
+                        name="HomeScreen"
+                        component={HomeScreen}
+                        options={{title:'Home Screen'}}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

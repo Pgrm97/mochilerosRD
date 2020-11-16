@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Text, Rating, AirbnbRating } from 'react-native-elements'
+import { Card, Text, Rating, AirbnbRating, Button } from 'react-native-elements'
 
 function RecommendationCard(props) {
 
@@ -15,6 +15,11 @@ function RecommendationCard(props) {
             </Card>
             <AirbnbRating 
             defaultRating={0}/>
+            <Button
+                    title="Continue"
+                    onPress={ () => props.navigation.navigate('HomeScreen')}
+                    type="solid"
+                />
         </View>
         
     );
