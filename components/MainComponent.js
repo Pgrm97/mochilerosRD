@@ -9,7 +9,8 @@ import Description from './DescriptionComponent';
 import Questionaire from './screens/QuestionaireComponent';
 import HomeScreen from './screens/HomeScreenComponent';
 import InitialRatingScreen from './screens/InitialRatingScreenComponent';
-import RecommendationScreen from './screens/RecommendationScreenComponent'
+import RecommendationScreen from './screens/RecommendationScreenComponent';
+import DetailCardScreen from './screens/DetailCardScreenComponent'
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,11 @@ class Main extends Component {
                         name="RecommendationScreen"
                         component={RecommendationScreen}
                         options={{title:'Recommendations'}}
+                    />
+                    <Stack.Screen
+                        name="DetailCardScreen"
+                        component={DetailCardScreen}
+                        options={{title:'Details'}}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

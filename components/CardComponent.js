@@ -6,9 +6,18 @@ function RecommendationCard(props) {
 
     return(
             <Card>
-                <Card.Title><Text h3 style = {textStyles.italic}>Sunny ☀️ Weekend</Text><Text h3> in Playa Dorada</Text></Card.Title>
-                <Card.Image source={{uri:
-                        'https://lh5.googleusercontent.com/p/AF1QipNLkGOoA8SDNECWJ_CrkLmwIlD27yM6rUwVE5w=s1160-k-no'}}/>
+                <Card.Title>
+                  <Text h3 style = {textStyles.italic}>{props.context}</Text>
+                  <Text h3> {props.in} </Text>
+                  <Text h3>{props.title}</Text>
+                </Card.Title>
+                <Card.Image source={{uri: props.image_url}}/>
+                <Text style={{marginTop: 10}}>
+                  {props.description}
+                </Text>
+                <Text style={{marginBottom: 10}}>
+                  {props.directions}
+                </Text>
             </Card>        
     );
 }
