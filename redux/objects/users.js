@@ -1,6 +1,6 @@
 import * as ActionTypes from '../ActionTypes'
 
-export const users = (state = {
+const users = (state = {
     isLoading: true,
     errMessage: null,
     users: []
@@ -16,3 +16,5 @@ export const users = (state = {
             return state;
     }
 }
+
+export default users;

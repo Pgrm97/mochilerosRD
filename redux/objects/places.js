@@ -1,6 +1,6 @@
 import * as ActionTypes from '../ActionTypes'
 
-export const places = (state = {
+const places = (state = {
     isLoading: true,
     errMessage: null,
     places: []
@@ -16,3 +16,5 @@ export const places = (state = {
             return state;
     }
 }
+
+export default places;
