@@ -18,13 +18,14 @@ class Database extends Component{
 
         ratingsCollectionRef.get().then((querySnapshot) => {
             querySnapshot.forEach((userDoc) => {
-                console.log(userDoc.data());
+                var data = userDoc.data();
+                console.log(data);
             })
-        })
+        });        
         
-        return(
+        return(            
             <View>
-                <Text>Firestore!</Text>
+                <Text>Testing</Text>
             </View>
         );
     }
