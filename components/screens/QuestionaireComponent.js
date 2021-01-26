@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom';
-import { Image, View, StyleSheet } from 'react-native'
+import { Image, View, StyleSheet, ScrollView } from 'react-native'
 import { Text, Button } from 'react-native-elements'
 import UselessTextInput from '../TextInputComponent';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -21,33 +21,59 @@ class Questionaire extends Component{
 
     render(){       
         return(
-            <View style={ styles.container }>
-                <Text p>{this.state.nameQuestion}{'\n'}</Text>
-                <UselessTextInput/>
-                <Text p>{this.state.emailQuestion}{'\n'}</Text>
-                <UselessTextInput/>
-                <Text p>{this.state.birthDate}{'\n'}</Text>
-                <DateTimePicker/>
-                <Text p>{this.state.countryOfOrigin}{'\n'}</Text>
-                <UselessTextInput/>
-                <Text p>{this.state.languageOfPreference}{'\n'}</Text>
-                <UselessTextInput/>
+            <ScrollView>
+                <View style={styles.formRow}>
+                    <Text p style={styles.formLabel}>{this.state.nameQuestion}{'\n'}</Text>
+                    <UselessTextInput/>
+                </View>
+                <View style={styles.formRow}>
+                    <Text p style={styles.formLabel}>{this.state.emailQuestion}{'\n'}</Text>
+                    <UselessTextInput/>
+                </View>
+                <View style={styles.formRow}>
+                    <Text p style={styles.formLabel}>{this.state.birthDate}{'\n'}</Text>
+                </View>
+                <View style={styles.formRow}>
+                    <Text p style={styles.formLabel}>{this.state.countryOfOrigin}{'\n'}</Text>
+                    <UselessTextInput/>
+                </View>
+                <View style={styles.formRow}>
+                    <Text p style={styles.formLabel}>{this.state.languageOfPreference}{'\n'}</Text>
+                    <UselessTextInput/>
+                </View>
+
+
+
+
+
+                
+                
                 <Button
                     title="Continue"
                     onPress={ () => this.props.navigation.navigate('Description')}
                     type="solid"
                 />
-            </View>
+                
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    formRow: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'row',
+      margin: 20
     },
+    formLabel: {
+        fontSize: 18,
+        flex: 2
+    },
+    formItem: {
+        flex: 1
+    }
   });
 
 export default Questionaire;
