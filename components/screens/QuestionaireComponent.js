@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom';
-import { Image, View, StyleSheet, ScrollView, TextInput } from 'react-native'
+import { Image, View, StyleSheet, ScrollView, TextInput, Picker, PickerIOSItem } from 'react-native'
 import { Text, Button } from 'react-native-elements'
 import UselessTextInput from '../TextInputComponent';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -18,13 +18,18 @@ class Questionaire extends Component{
             display_name: "",
             email: "",
             country_of_origin: "",
-            language_of_preference: ""
-
+            language_of_preference: "",
+            languages: ['Español', 'English']
         }        
     }
 
-    render(){       
+    render(){
+        let languageItems = this.state.languages.map( (s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        });
+        
         return(
+            //TEXT STYLE INCORRECT BUT WORKS!
             <ScrollView>
                 <View style={styles.formRow}>
                     <Text p style={styles.formLabel}>{this.state.nameQuestion}{'\n'}</Text>
@@ -55,16 +60,21 @@ class Questionaire extends Component{
                 </View>
                 <View style={styles.formRow}>
                     <Text p style={styles.formLabel}>{this.state.languageOfPreference}{'\n'}</Text>
-                    <TextInput
+                    <Picker 
                         style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1 }}
-                        onChangeText={(text) => this.setState({language_of_preference: text})}
-                        value={this.state.language_of_preference}
-                    />
+                        selectedValue={this.state.language_of_preference}
+                        onValueChange={(itemValue, itemIndex) => this.setState({language_of_preference: itemValue})}>                       
+                        {languageItems}
+                    </Picker>
                 </View>               
                 
                 <Button
                     title="Continue"
-                    onPress={ () => this.props.navigation.navigate('Description')}
+                    onPress={ () => {
+                        if(this.state.language_of_preference == "")
+                            this.setState({language_of_preference: this.state.languages[0]});
+                        this.props.navigation.navigate('Description');                        
+                    }}
                     type="solid"
                 />                
             </ScrollView>
