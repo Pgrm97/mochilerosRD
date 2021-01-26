@@ -19,13 +19,13 @@ class Database extends Component{
         ratingsCollectionRef.get().then((querySnapshot) => {
             querySnapshot.forEach((userDoc) => {
                 var data = userDoc.data();
-                console.log(data);
+                this.setState({document: data.rating});
             })
         });        
         
         return(            
             <View>
-                <Text>Testing</Text>
+                <Text>This app has an average rating of {this.state.document}!</Text>
             </View>
         );
     }
