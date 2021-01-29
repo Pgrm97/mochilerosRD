@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { db } from '../config';
+import { database } from '../config';
 
 import { View, Text }from 'react-native'
-
-var ratingsCollectionRef = db.collection('ratings');
 
 class Database extends Component{
     constructor(props){
@@ -12,20 +10,22 @@ class Database extends Component{
             document: ''
         }
 
-    }   
+    }
+
+    componentDidMount() {
+        database.ref('users').once('value').then((snapshot) => {
+            console.log(snapshot.child('pgrm97-gmail-com'));
+            this.setState({document: snapshot.child('pgrm97-gmail-com/display_name').val()})
+        })
+    }
 
     render(){
 
-        ratingsCollectionRef.get().then((querySnapshot) => {
-            querySnapshot.forEach((userDoc) => {
-                var data = userDoc.data();
-                this.setState({document: data.rating});
-            })
-        });        
+        
         
         return(            
             <View>
-                <Text>This app has an average rating of {this.state.document}!</Text>
+                <Text>Created by {this.state.document}</Text>
             </View>
         );
     }
