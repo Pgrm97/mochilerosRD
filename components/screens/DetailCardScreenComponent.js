@@ -8,10 +8,10 @@ function DetailCardScreen(props) {
     return(
         <View style={ styles.container }>
             <RecommendationCard 
-                title="Playa Golden"
+                title="Playa Grande"
                 context="Sunny ☀️ Weekend"
                 in="in"
-                image_url="https://lh5.googleusercontent.com/p/AF1QipNLkGOoA8SDNECWJ_CrkLmwIlD27yM6rUwVE5w=s1160-k-no"
+                image_url="https://lh3.googleusercontent.com/p/AF1QipMi4kaK-EnSEEVCgAK3yaIBeEl05hQp5ebZOJhI=s1600-w800"
                 />
             <Text h4>Did you visit this place? Add the date and rating!</Text>
             <AirbnbRating 
