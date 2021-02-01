@@ -17,8 +17,8 @@ class Questionaire extends Component{
             languageOfPreference: "What is your language of preference?",
             buttonDate: "Choose a date",
 
-            //textInputName: "Enter your full name",
-            //textInputEmail: "Enter your email address",
+            textInputName: "Enter your full name",
+            textInputEmail: "Enter your e-mail address",
             
             display_name: "",
             email: "",
@@ -37,28 +37,47 @@ class Questionaire extends Component{
     }
 
     uploadToFirebase = () => {
-        if(this.state.language_of_preference == "")
-            this.setState({language_of_preference: this.state.languages[0]}).then(() => {
-        });   
-
-        database.ref('users/001').set({
-            display_name: this.state.display_name,
-            email: this.state.email,
-            birthDate: this.state.date.toISOString(),
-            country_of_origin: this.state.country_of_origin,
-            language_of_preference: this.state.language_of_preference
-        }).then(() => {
-            console.log(this.state.date.toDateString())
-        }).catch((error) => {
-            console.log(error);
-        })
+        if(!this.state.language_of_preference){
+            this.setState({language_of_preference: this.state.languages[0]}, () => {
+                database.ref('users/001').set({
+                    display_name: this.state.display_name,
+                    email: this.state.email,
+                    birthDate: this.state.date.toISOString(),
+                    country_of_origin: this.state.country_of_origin,
+                    language_of_preference: this.state.language_of_preference
+                }).then(() => {
+                    console.log(this.state.language_of_preference)
+                }).catch((error) => {
+                    console.log(error);
+                });
+            });
+        }
+        else {
+            database.ref('users/001').set({
+                display_name: this.state.display_name,
+                email: this.state.email,
+                birthDate: this.state.date.toISOString(),
+                country_of_origin: this.state.country_of_origin,
+                language_of_preference: this.state.language_of_preference
+            }).then(() => {
+                console.log(this.state.language_of_preference)
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     }
 
-    // checkTextInput = () => {
-    //     if(!this.state.display_name.trim()){
-    //         alert('Please enter name');
-    //     }
-    // }
+    checkTextInput = () => {
+        if(!this.state.display_name.trim()){
+            alert('Please enter name');
+            return 1;
+        }
+        if(!this.state.email.trim()){
+            alert('Please enter e-mail address');
+            return 1;
+        }
+        return 0;
+    }
 
     render(){
         let languageItems = this.state.languages.map( (s, i) => {
@@ -86,6 +105,7 @@ class Questionaire extends Component{
                     <Text p style={styles.formLabel}>{this.state.nameQuestion}{'\n'}</Text>
                     <TextInput
                         style={styles.formItem}
+                        placeholder={this.state.textInputName}
                         onChangeText={(text) => this.setState({display_name: text})}
                         value={this.state.display_name}
                     />
@@ -94,6 +114,7 @@ class Questionaire extends Component{
                     <Text p style={styles.formLabel}>{this.state.emailQuestion}{'\n'}</Text>
                     <TextInput
                         style={styles.formItem}
+                        placeholder={this.state.textInputEmail}
                         onChangeText={(text) => this.setState({email: text})}
                         value={this.state.email}
                     />
@@ -134,9 +155,11 @@ class Questionaire extends Component{
                 <Button
                     title="Continue"
                     onPress={ () => {
-                        this.uploadToFirebase();                     
-                        this.props.navigation.navigate('Description');
-                        //this.checkTextInput();                       
+                        if(!this.checkTextInput()){
+                            this.uploadToFirebase();                     
+                            this.props.navigation.navigate('Description');
+                        }
+                        
                     }}
                     type="solid"
                 />                
