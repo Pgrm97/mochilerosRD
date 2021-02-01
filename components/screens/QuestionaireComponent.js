@@ -4,6 +4,7 @@ import { Image, View, StyleSheet, ScrollView, TextInput, Picker, PickerIOSItem }
 import { Text, Button } from 'react-native-elements'
 import UselessTextInput from '../TextInputComponent';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { database } from '../../config'
 
 class Questionaire extends Component{
     constructor(props){
@@ -15,6 +16,9 @@ class Questionaire extends Component{
             countryOfOrigin: "What is your country of origin?",
             languageOfPreference: "What is your language of preference?",
             buttonDate: "Choose a date",
+
+            //textInputName: "Enter your full name",
+            //textInputEmail: "Enter your email address",
             
             display_name: "",
             email: "",
@@ -28,8 +32,32 @@ class Questionaire extends Component{
         }        
     }
 
-    // onSubmit(){
+    componentDidMount(){
+        
+    }
 
+    uploadToFirebase = () => {
+        if(this.state.language_of_preference == "")
+            this.setState({language_of_preference: this.state.languages[0]}).then(() => {
+        });   
+
+        database.ref('users/001').set({
+            display_name: this.state.display_name,
+            email: this.state.email,
+            birthDate: this.state.date.toISOString(),
+            country_of_origin: this.state.country_of_origin,
+            language_of_preference: this.state.language_of_preference
+        }).then(() => {
+            console.log(this.state.date.toDateString())
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    // checkTextInput = () => {
+    //     if(!this.state.display_name.trim()){
+    //         alert('Please enter name');
+    //     }
     // }
 
     render(){
@@ -106,9 +134,9 @@ class Questionaire extends Component{
                 <Button
                     title="Continue"
                     onPress={ () => {
-                        if(this.state.language_of_preference == "")
-                            this.setState({language_of_preference: this.state.languages[0]});
-                        this.props.navigation.navigate('Description');                        
+                        this.uploadToFirebase();                     
+                        this.props.navigation.navigate('Description');
+                        //this.checkTextInput();                       
                     }}
                     type="solid"
                 />                
