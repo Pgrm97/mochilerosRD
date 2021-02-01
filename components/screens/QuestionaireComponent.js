@@ -36,35 +36,41 @@ class Questionaire extends Component{
         
     }
 
-    uploadToFirebase = () => {
-        if(!this.state.language_of_preference){
-            this.setState({language_of_preference: this.state.languages[0]}, () => {
-                database.ref('users/001').set({
-                    display_name: this.state.display_name,
-                    email: this.state.email,
-                    birthDate: this.state.date.toISOString(),
-                    country_of_origin: this.state.country_of_origin,
-                    language_of_preference: this.state.language_of_preference
-                }).then(() => {
-                    console.log(this.state.language_of_preference)
-                }).catch((error) => {
-                    console.log(error);
+    validateFirebase = () => {
+        if(!this.state.language_of_preference && !this.state.country_of_origin){
+            this.setState(
+                {
+                    language_of_preference: this.state.languages[0],
+                    country_of_origin: this.state.countries[0]
+                }, () => {
+                    this.uploadToFirebase();
                 });
+        }
+        else if(!this.state.country_of_origin){
+            this.setState({country_of_origin: this.state.countries[0]}, () => {
+                this.uploadToFirebase();
             });
         }
-        else {
-            database.ref('users/001').set({
-                display_name: this.state.display_name,
-                email: this.state.email,
-                birthDate: this.state.date.toISOString(),
-                country_of_origin: this.state.country_of_origin,
-                language_of_preference: this.state.language_of_preference
-            }).then(() => {
-                console.log(this.state.language_of_preference)
-            }).catch((error) => {
-                console.log(error);
+        else if(!this.state.country_of_origin){
+            this.setState({language_of_preference: this.state.languages[0]}, () => {
+                this.uploadToFirebase();
             });
         }
+    }
+
+    uploadToFirebase = () => {
+        database.ref('users/' + this.state.email.split('@')[0] + '-' + this.state.email.split('@')[1].split('.')[0] 
+        + '-' + this.state.email.split('@')[1].split('.')[1]).set({
+            display_name: this.state.display_name,
+            email: this.state.email,
+            birthDate: this.state.date.toISOString(),
+            country_of_origin: this.state.country_of_origin,
+            language_of_preference: this.state.language_of_preference
+        }).then(() => {
+            console.log(this.state.language_of_preference)
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     checkTextInput = () => {
@@ -156,7 +162,7 @@ class Questionaire extends Component{
                     title="Continue"
                     onPress={ () => {
                         if(!this.checkTextInput()){
-                            this.uploadToFirebase();                     
+                            this.validateFirebase();                     
                             this.props.navigation.navigate('Description');
                         }
                         
