@@ -51,10 +51,13 @@ class Questionaire extends Component{
                 this.uploadToFirebase();
             });
         }
-        else if(!this.state.country_of_origin){
+        else if(!this.state.language_of_preference){
             this.setState({language_of_preference: this.state.languages[0]}, () => {
                 this.uploadToFirebase();
             });
+        }
+        else{
+            this.uploadToFirebase();
         }
     }
 
