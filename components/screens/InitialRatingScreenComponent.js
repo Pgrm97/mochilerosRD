@@ -16,8 +16,9 @@ class InitialRatingScreen extends Component {
 
     componentDidMount() {
       this.getMoviesFromApiAsync().then( (response) => {
-          alert("Today is a " + this.getDate() + " with " + response.current.weather[0].description + " and the temperature is around " + (response.current.temp - 273.15) + "C")
+          alert("Today is a " + this.getDate() + " with " + response.current.weather[0].description + " and the temperature is around " + (response.current.temp - 273.15).toFixed() + "C")
           //this.setState({data: response});
+          // Temp doesn't have decimals.
       });
   }
 
@@ -55,7 +56,7 @@ class InitialRatingScreen extends Component {
               defaultRating={0}/>
               <Button
                       title="Continue"
-                      onPress={ () => props.navigation.navigate('HomeScreen')}
+                      onPress={ () => this.props.navigation.navigate('HomeScreen')}
                       type="solid"
                   />
           </View>
