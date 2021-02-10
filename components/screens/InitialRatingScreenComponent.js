@@ -10,32 +10,23 @@ class InitialRatingScreen extends Component {
       super(props);
       this.state = {
         data: '',
-        context: ''
+        weather: '',
+        time: '',
+        temperature: '',
+        emoji: ''
       }
-
-      this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this);
     }
 
     componentDidMount() {
       this.accessDBPlaces();
-      this.getMoviesFromApiAsync().then( (response) => {
-          alert("Today is a " + this.getDate() + " with " + response.current.weather[0].description + " and the temperature is around " + (response.current.temp - 273.15).toFixed() + "C");
+      fetch('https://api.openweathermap.org/data/2.5/onecall?lat=19.790217&lon=-70.690793&exclude=minutely,daily,hourly,alerts&appid=70263032a30d9564a024794abb3ea050')
+      .then((response) => response.json())
+      .then(context => {
+        if(context.current.weather[0].main == "Clouds")
+          this.setState({weather: 'Cloudy', emoji: '☁'});
+        //alert("Today is a " + this.getDate() + " with " + context.current.weather[0].description + " and the temperature is around " + (context.current.temp - 273.15).toFixed() + "C");
       });
   }
-
-  getMoviesFromApiAsync = async () => {
-      try {
-        let response = await fetch(
-          'https://api.openweathermap.org/data/2.5/onecall?lat=19.790217&lon=-70.690793&exclude=minutely,daily,hourly,alerts&appid=70263032a30d9564a024794abb3ea050'
-        );
-        let json = await response.json();
-        this.setState({context: json});
-        console.log(json);
-        return this.state.context;
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
   getDate = () => {
     var dt = new Date().getDate();
@@ -60,7 +51,7 @@ class InitialRatingScreen extends Component {
               <Text h4>How would you rate?</Text>
               <RecommendationCard 
                   title={this.state.data.name}
-                  context="Sunny ☀️ Weekend"
+                  context={this.state.weather + this.state.emoji + " Day"}
                   in="in"
                   image_url={this.state.data.img_url}
                   directions={"Located in " + this.state.data.address}

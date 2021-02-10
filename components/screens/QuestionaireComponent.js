@@ -165,7 +165,7 @@ class Questionaire extends Component{
                     title="Continue"
                     onPress={ () => {
                         if(!this.checkTextInput()){
-                            this.validateFirebase();                     
+                            //this.validateFirebase();                     
                             this.props.navigation.navigate('Description');
                         }
                         
