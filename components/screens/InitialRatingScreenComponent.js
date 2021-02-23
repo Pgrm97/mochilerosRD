@@ -9,40 +9,73 @@ class InitialRatingScreen extends Component {
     constructor(props){
       super(props);
       this.state = {
+        placeKey: '',
         data: '',
         weather: '',
         time: '',
         temperature: '',
-        emoji: ''
+        emoji: '',
+        user: 'pgrm97-gmail-com',
+        rating: 0
       }
     }
 
     componentDidMount() {
       this.accessDBPlaces();
+      this.getDate();
       fetch('https://api.openweathermap.org/data/2.5/onecall?lat=19.790217&lon=-70.690793&exclude=minutely,daily,hourly,alerts&appid=70263032a30d9564a024794abb3ea050')
       .then((response) => response.json())
       .then(context => {
+        if((context.current.temp - 273.15).toFixed() < 30)
+                this.setState({temperature: 0})
+        else
+        this.setState({temperature: 1})
         if(context.current.weather[0].main == "Clouds")
-          this.setState({weather: 'Cloudy', emoji: '☁'});
+          this.setState({weather: 'Cloudy', emoji: '☁️'});
+        else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
+          this.setState({weather: 'Rainy', emoji: '🌧️'});
+        else if (context.current.weather[0].main == "Clear")
+          this.setState({weather: 'Sunny', emoji: '☀️'});
+        else
+          this.setState({weather: 'Cloudy', emoji: '☁️'});
         //alert("Today is a " + this.getDate() + " with " + context.current.weather[0].description + " and the temperature is around " + (context.current.temp - 273.15).toFixed() + "C");
       });
+  }
+
+  ratingCompleted = (rating) => {
+      this.setState({rating: rating});
   }
 
   getDate = () => {
     var dt = new Date().getDate();
     if (dt == 0 || dt == 6)
-      return "weekend";
+      this.setState({time: 1});
     else
-      return "weekday";
+      this.setState({time: 0});
   }
 
   accessDBPlaces = () => {
     database.ref('places').once('value').then((snapshot) => {
         this.setState(
           {
-            data: snapshot.child('playa-dorada').val()
+            data: snapshot.child('playa-dorada').val(), placeKey:snapshot.child('playa-dorada').key
           });
     })
+  }
+
+  uploadRatingToDB = () => {
+
+    database.ref('ratings/' + this.state.user + "+" + this.state.placeKey + "+" + "cloudy-<30-weekday").set({
+      userID: this.state.user,
+      placeID: this.state.placeKey,
+      rating: this.state.rating,
+      weekend: this.state.time,
+      weather: this.state.weather,
+      temp: this.state.temperature
+    }).then(() => {
+  }).catch((error) => {
+      console.log(error);
+  })
   }
 
     render(){
@@ -57,10 +90,15 @@ class InitialRatingScreen extends Component {
                   directions={"Located in " + this.state.data.address}
                   />
               <AirbnbRating 
-              defaultRating={0}/>
+                defaultRating={0}
+                onFinishRating={this.ratingCompleted}
+                />
               <Button
                       title="Continue"
-                      onPress={ () => this.props.navigation.navigate('HomeScreen')}
+                      onPress={ () => {
+                        this.uploadRatingToDB();
+                        this.props.navigation.navigate('HomeScreen');
+                      }}
                       type="solid"
                   />
           </View>
