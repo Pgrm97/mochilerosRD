@@ -58,14 +58,14 @@ class InitialRatingScreen extends Component {
     database.ref('places').once('value').then((snapshot) => {
         this.setState(
           {
-            data: snapshot.child('playa-dorada').val(), placeKey:snapshot.child('playa-dorada').key
+            data: snapshot.child('playa+dorada').val(), placeKey:snapshot.child('playa+dorada').key
           });
     })
   }
 
   uploadRatingToDB = () => {
 
-    database.ref('ratings/' + this.state.user + "+" + this.state.placeKey + "+" + "cloudy-<30-weekday").set({
+    database.ref('ratings/' + this.state.user + "%" + this.state.placeKey + "%" + "cloudy-<30-weekday").set({
       userID: this.state.user,
       placeID: this.state.placeKey,
       rating: this.state.rating,
