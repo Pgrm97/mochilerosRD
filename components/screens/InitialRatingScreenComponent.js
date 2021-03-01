@@ -3,11 +3,13 @@ import { View, StyleSheet } from 'react-native'
 import { Card, Text, Rating, AirbnbRating, Button } from 'react-native-elements'
 import RecommendationCard from '../CardComponent';
 import { database } from '../../config';
+import { connect } from 'react-redux'
 
 class InitialRatingScreen extends Component {
 
     constructor(props){
       super(props);
+      const { users, places } = props;
       this.state = {
         placeKey: '',
         data: '',
@@ -15,7 +17,7 @@ class InitialRatingScreen extends Component {
         time: '',
         temperature: '',
         emoji: '',
-        user: 'pgrm97-gmail-com',
+        user: this.props.users,
         rating: 0
       }
     }
@@ -65,8 +67,8 @@ class InitialRatingScreen extends Component {
 
   uploadRatingToDB = () => {
 
-    database.ref('ratings/' + this.state.user + "%" + this.state.placeKey + "%" + "cloudy-<30-weekday").set({
-      userID: this.state.user,
+    database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.placeKey + "%" + "cloudy-<30-weekday").set({
+      userID: this.state.user.users[0].id,
       placeID: this.state.placeKey,
       rating: this.state.rating,
       weekend: this.state.time,
@@ -108,6 +110,15 @@ class InitialRatingScreen extends Component {
     
 }
 
+const mapStateToProps = (state) => ({
+  places: state.places,
+  users: state.users
+})
+
+const InitialRatingScreenRedux = connect(mapStateToProps)(
+  InitialRatingScreen
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InitialRatingScreen;
+export default InitialRatingScreenRedux;
