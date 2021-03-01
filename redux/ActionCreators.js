@@ -1,68 +1,40 @@
 import * as ActionTypes from './ActionTypes'
-//import { baseUrl } from ''
+import { database } from '../config';
+
 
 export const fetchPlaces = () => (dispatch) => {
-    return fetch(baseUrl + 'places')
-        .then(response => {
-            if(response.ok) {
-                return response;
-            }
-            else {
-                var error = new Error('Error' + response.status + ':' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },
-        error => {
-            var errMessage = new Error(error.message);
-            throw errMessage;
-        })
-        .then(response => response.json)
-        .then(places => dispatch(addPlaces(places)))
-        //.catch(error => dispatch(placesFailed(error.message)))
+    database.ref('places').once('value').then((snapshot) => {
+        return dispatch(addPlaces(snapshot.val()));
+    });
 }
 
-export const fetchRecommendations = () => (dispatch) => {
-    return fetch(baseUrl + 'recommendations')
-        .then(response => {
-            if(response.ok) {
-                return response;
-            }
-            else {
-                var error = new Error('Error' + response.status + ':' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },
-        error => {
-            var errMessage = new Error(error.message);
-            throw errMessage;
-        })
-        .then(response => response.json)
-        .then(recommendations => dispatch(addPlaces(recommendations)))
-        //.catch(error => dispatch(recommendationsFailed(error.message)))
+export const fetchRecommendations = (user) => (dispatch) => {
+    database.ref('recommendations/' + user).once('value').then((snapshot) => {
+        console.log('recommendations/' + user);
+        return dispatch(addPlaces(snapshot.val()));
+    });
 }
 
-export const fetchUsers = () => (dispatch) => {
-    return fetch(baseUrl + 'users')
-        .then(response => {
-            if(response.ok) {
-                return response;
-            }
-            else {
-                var error = new Error('Error' + response.status + ':' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },
-        error => {
-            var errMessage = new Error(error.message);
-            throw errMessage;
-        })
-        .then(response => response.json)
-        .then(users => dispatch(addPlaces(users)))
-        //.catch(error => dispatch(usersFailed(error.message)))
-}
+// export const fetchUsers = () => (dispatch) => {
+//     return fetch(baseUrl + 'users')
+//         .then(response => {
+//             if(response.ok) {
+//                 return response;
+//             }
+//             else {
+//                 var error = new Error('Error' + response.status + ':' + response.statusText);
+//                 error.response = response;
+//                 throw error;
+//             }
+//         },
+//         error => {
+//             var errMessage = new Error(error.message);
+//             throw errMessage;
+//         })
+//         .then(response => response.json)
+//         .then(users => dispatch(addPlaces(users)))
+//         //.catch(error => dispatch(usersFailed(error.message)))
+// }
 
 
 export const usersLoading = () => ({
