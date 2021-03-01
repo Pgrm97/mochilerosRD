@@ -4,7 +4,14 @@ import { Text, Button } from 'react-native-elements'
 import Database from '../DatabaseComponent'
 import Places from '../CreatePlacesComponent'
 
+import { connect } from 'react-redux'
+import { fetchPlaces } from '../../redux/ActionCreators'
+
 function Intro(props) {
+
+    const { places, fetchPlaces } = props;
+
+    
 
     return(
         <View style={ styles.container }>
@@ -16,6 +23,12 @@ function Intro(props) {
             <Button
               style={{marginTop: 50}}
               title="Continue"
+              onPress={ () => fetchPlaces()}
+              type="solid"
+            />
+            <Button
+              style={{marginTop: 50}}
+              title="Continue"
               onPress={ () => props.navigation.navigate('Questionaire')}
               type="solid"
             />
@@ -23,6 +36,14 @@ function Intro(props) {
         
     );
 }
+
+const mapStateToProps = (state) => ({
+    reducer: state.places
+})
+
+const IntroScreen = connect(mapStateToProps, {fetchPlaces})(
+    Intro
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -33,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Intro;
+export default IntroScreen;
