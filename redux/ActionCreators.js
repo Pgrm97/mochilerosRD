@@ -15,6 +15,10 @@ export const fetchRecommendations = (user) => (dispatch) => {
     });
 }
 
+export const onAddUser = (users) => (dispatch) => {
+    return dispatch(addUsers(users));
+}
+
 // export const fetchUsers = () => (dispatch) => {
 //     return fetch(baseUrl + 'users')
 //         .then(response => {

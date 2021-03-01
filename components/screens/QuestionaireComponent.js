@@ -6,8 +6,13 @@ import UselessTextInput from '../TextInputComponent';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { database } from '../../config'
 
+import { connect } from 'react-redux'
+import { onAddUser } from '../../redux/ActionCreators'
+
 class Questionaire extends Component{
     constructor(props){
+        const { users, onAddUser } = props;
+
         super(props);
         this.state = {
             nameQuestion: "What is your name?",
@@ -29,11 +34,12 @@ class Questionaire extends Component{
         
             date: new Date(1598051730000),
             show: false
-        }        
+        }
+        
+        
     }
 
     componentDidMount(){
-        
     }
 
     validateFirebase = () => {
@@ -62,6 +68,7 @@ class Questionaire extends Component{
     }
 
     uploadToFirebase = () => {
+
         database.ref('users/' + this.state.email.split('@')[0] + '-' + this.state.email.split('@')[1].split('.')[0] 
         + '-' + this.state.email.split('@')[1].split('.')[1]).set({
             display_name: this.state.display_name,
@@ -69,11 +76,21 @@ class Questionaire extends Component{
             birthDate: this.state.date.toISOString(),
             country_of_origin: this.state.country_of_origin,
             language_of_preference: this.state.language_of_preference
-        }).then(() => {
-            console.log(this.state.language_of_preference)
         }).catch((error) => {
             console.log(error);
         })
+
+        this.props.onAddUser([{
+            id: this.state.email.split('@')[0] + '-' + this.state.email.split('@')[1].split('.')[0] 
+            + '-' + this.state.email.split('@')[1].split('.')[1],
+            display_name: this.state.display_name,
+            email: this.state.email,
+            birthDate: this.state.date.toISOString(),
+            country_of_origin: this.state.country_of_origin,
+            language_of_preference: this.state.language_of_preference
+        }]);
+
+        
     }
 
     checkTextInput = () => {
@@ -165,7 +182,7 @@ class Questionaire extends Component{
                     title="Continue"
                     onPress={ () => {
                         if(!this.checkTextInput()){
-                            //this.validateFirebase();                     
+                            this.validateFirebase();                     
                             this.props.navigation.navigate('Description');
                         }
                         
@@ -176,6 +193,14 @@ class Questionaire extends Component{
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    reducer: state.users
+})
+
+const QuestionaireScreen = connect(mapStateToProps, {onAddUser})(
+    Questionaire
+  );
 
 const styles = StyleSheet.create({
     formRow: {
@@ -197,4 +222,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Questionaire;
+export default QuestionaireScreen;
