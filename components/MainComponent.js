@@ -9,6 +9,7 @@ import Description from './DescriptionComponent';
 import Questionaire from './screens/QuestionaireComponent';
 import HomeScreen from './screens/HomeScreenComponent';
 import InitialRatingScreen from './screens/InitialRatingScreenComponent';
+import PlacesDropdownScreen from './screens/PlacesDropdownScreenComponent';
 import RecommendationScreen from './screens/RecommendationScreenComponent';
 import DetailCardScreen from './screens/DetailCardScreenComponent'
 
@@ -42,6 +43,11 @@ class Main extends Component {
                         name="InitialRating"
                         component={InitialRatingScreen}
                         options={{title:'Initial Ratings'}}
+                    />
+                    <Stack.Screen
+                        name="PlacesDropdown"
+                        component={PlacesDropdownScreen}
+                        options={{title:'Rating Places'}}
                     />
                     <Stack.Screen
                         name="HomeScreen"

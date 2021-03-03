@@ -99,7 +99,7 @@ class InitialRatingScreen extends Component {
                       title="Continue"
                       onPress={ () => {
                         this.uploadRatingToDB();
-                        this.props.navigation.navigate('HomeScreen');
+                        this.props.navigation.navigate('PlacesDropdown');
                       }}
                       type="solid"
                   />
