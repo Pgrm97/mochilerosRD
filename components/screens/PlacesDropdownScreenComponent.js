@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Button } from 'react-native'
 import { database } from '../../config';
 import { connect } from 'react-redux'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -11,6 +11,7 @@ class PlacesDropdownScreen extends Component {
         super(props);
         this.state = {
             weather: 'sunny',
+            place: 'casa+40',
             spanish: {
                 sunny: "Soleado",
                 cloudy: "Nublado",
@@ -29,7 +30,7 @@ class PlacesDropdownScreen extends Component {
     componentDidMount(){
         for(let place in this.props.places.places){
             this.state.places.push({
-                label: place, value: this.props.places.places[place]
+                label: this.props.places.places[place].name, value: place
             })
         }
     }
@@ -55,8 +56,7 @@ class PlacesDropdownScreen extends Component {
                     })}
                 />
                 <DropDownPicker
-                    items={[]}
-                    defaultValue={this.state.weather}
+                    items={this.state.places}
                     containerStyle={{height: 40}}
                     style={{backgroundColor: '#fafafa'}}
                     itemStyle={{
@@ -64,9 +64,16 @@ class PlacesDropdownScreen extends Component {
                     }}
                     dropDownStyle={{backgroundColor: '#fafafa'}}
                     onChangeItem={item => this.setState({
-                        weather: item.value
+                        place: item.value
                     })}
                 />
+                <Button
+                      title="Continue"
+                      onPress={ () => {
+                        this.props.navigation.navigate('HomeScreen');
+                      }}
+                      type="solid"
+                  />
             </View>
         )
     }
