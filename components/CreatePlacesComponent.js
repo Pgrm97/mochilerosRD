@@ -1,20 +1,24 @@
 import React, {Component} from 'react'
 import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
+import { fetchPlaces } from '../redux/ActionCreators'
 
 class Places extends Component{
     constructor(props){
         super(props);
+        const { places, fetchPlaces } = props;
         this.state = {
             isLoading: true,
             data: ''
         }
-        this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this);
+        // this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this);
     }
 
     componentDidMount() {
-        this.getMoviesFromApiAsync().then( function(response) {
-            console.log(response);
-        });
+        // this.getMoviesFromApiAsync().then( function(response) {
+        //     //console.log(response);
+        // });
+        this.props.fetchPlaces();
     }
 
     getMoviesFromApiAsync = async () => {
@@ -39,4 +43,12 @@ class Places extends Component{
     }    
 }
 
-export default Places;
+const mapStateToProps = (state) => ({
+    places: state.places
+})
+
+const CreatePlacesRedux = connect(mapStateToProps, {fetchPlaces})(
+    Places
+  );
+
+export default CreatePlacesRedux;

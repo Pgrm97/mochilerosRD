@@ -10,12 +10,28 @@ class PlacesDropdownScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
-            country: 'uk'
+            weather: 'sunny',
+            spanish: {
+                sunny: "Soleado",
+                cloudy: "Nublado",
+                rain: "Lloviendo"
+            },
+            english: {
+                sunny: "Sunny",
+                cloudy: "Cloudy",
+                rain: "Rain"
+            },
+            places: []
         };
+
     }
 
     componentDidMount(){
-
+        for(let place in this.props.places.places){
+            this.state.places.push({
+                label: place, value: this.props.places.places[place]
+            })
+        }
     }
 
     render(){
@@ -23,11 +39,11 @@ class PlacesDropdownScreen extends Component {
             <View style = {styles.container}>
                 <DropDownPicker
                     items={[
-                        {label: 'USA', value: 'usa'},
-                        {label: 'UK', value: 'uk'},
-                        {label: 'France', value: 'france'},
+                        {label: this.state.english.sunny , value: 'sunny'},
+                        {label: this.state.english.cloudy, value: 'cloudy'},
+                        {label: this.state.english.rain, value: 'rain'},
                     ]}
-                    defaultValue={this.state.country}
+                    defaultValue={this.state.weather}
                     containerStyle={{height: 40}}
                     style={{backgroundColor: '#fafafa'}}
                     itemStyle={{
@@ -35,7 +51,20 @@ class PlacesDropdownScreen extends Component {
                     }}
                     dropDownStyle={{backgroundColor: '#fafafa'}}
                     onChangeItem={item => this.setState({
-                        country: item.value
+                        weather: item.value
+                    })}
+                />
+                <DropDownPicker
+                    items={[]}
+                    defaultValue={this.state.weather}
+                    containerStyle={{height: 40}}
+                    style={{backgroundColor: '#fafafa'}}
+                    itemStyle={{
+                        justifyContent: 'flex-start'
+                    }}
+                    dropDownStyle={{backgroundColor: '#fafafa'}}
+                    onChangeItem={item => this.setState({
+                        weather: item.value
                     })}
                 />
             </View>
