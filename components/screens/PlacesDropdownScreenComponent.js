@@ -11,8 +11,9 @@ class PlacesDropdownScreen extends Component {
 
     constructor(props){
         super(props);
+        const { users, places } = props;
         this.state = {
-            default_weather: 'sunny',
+
             spanish: {
                 sunny: "Soleado",
                 cloudy: "Nublado",
@@ -25,13 +26,21 @@ class PlacesDropdownScreen extends Component {
             },
             emoji: '',
             places: [],
-            weekend: true,
-            temperature: false,
+
 
             weather: 'Sunny',
             place_name: '',
             image_url: '',
-            address: ''
+            address: '',
+
+            place: '',
+            default_weather: 'sunny',            
+            weekend: 1,
+            temperature: 0,
+            rating: 0,
+
+            user: this.props.users
+
         };
 
     }
@@ -45,37 +54,44 @@ class PlacesDropdownScreen extends Component {
         }
     }
 
+    uploadRatingToDB = () => {
+
+        database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.place + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+          userID: this.state.user.users[0].id,
+          placeID: this.state.place,
+          rating: this.state.rating,
+          weekend: this.state.weekend,
+          weather: this.state.default_weather,
+          temp: this.state.temperature
+          }).then(() => {
+        }).catch((error) => {
+            console.log(error);
+        })
+  
+        database.ref('ratings_organized/' + this.state.user.users[0].id + "/" + this.state.place + "/" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+        userID: this.state.user.users[0].id,
+        placeID: this.state.place,
+        rating: this.state.rating,
+        weekend: this.state.weekend,
+        weather: this.state.default_weather,
+        temp: this.state.temperature
+        }).then(() => {
+      }).catch((error) => {
+          console.log(error);
+      })
+
+      this.setState({
+          rating: 0
+      })
+    }
+
+    ratingCompleted = (rating) => {
+        this.setState({rating: rating});
+    }
+
     render(){
         return(
             <View style = {styles.container}>
-                <RecommendationCard 
-                    title={this.state.place_name}
-                    context={this.state.weather + this.state.emoji + " Day"}
-                    in="in"
-                    image_url={this.state.image_url}
-                    directions={"Located in " + this.state.address}
-                    />
-                <AirbnbRating 
-                    defaultRating={0}
-                    onFinishRating={this.ratingCompleted}
-                    />
-                <Button
-                    title="Rate"
-                    onPress={ () => {
-                    //this.uploadRatingToDB();
-                    }}
-                    type="solid"
-                />    
-                <CheckBox
-                    title='Is it a weekend?'
-                    checked={this.state.weekend}
-                    onPress={() => this.setState({weekend: !this.state.weekend})}
-                />
-                <CheckBox
-                    title='Is it hotter than 30°C?'
-                    checked={this.state.temperature}
-                    onPress={() => this.setState({temperature: !this.state.temperature})}
-                />
                 <View style = {{flexDirection: 'row',marginBottom: 200}}>
                     <DropDownPicker
                         items={[
@@ -100,6 +116,34 @@ class PlacesDropdownScreen extends Component {
                         })}
                     />
                 </View>
+                <CheckBox
+                    title='Is it a weekend?'
+                    checked={this.state.weekend}
+                    onPress={() => this.setState({weekend: !this.state.weekend})}
+                />
+                <CheckBox
+                    title='Is it hotter than 30°C?'
+                    checked={this.state.temperature}
+                    onPress={() => this.setState({temperature: !this.state.temperature})}
+                />
+                <RecommendationCard 
+                    title={this.state.place_name}
+                    context={this.state.weather + this.state.emoji + " Day"}
+                    in="in"
+                    image_url={this.state.image_url}
+                    directions={"Located in " + this.state.address}
+                    />
+                <AirbnbRating 
+                    defaultRating={this.state.rating}
+                    onFinishRating={this.ratingCompleted}
+                    />
+                <Button
+                    title="Rate"
+                    onPress={ () => {
+                    this.uploadRatingToDB();
+                    }}
+                    type="solid"
+                />                   
                             
                 <Button
                       title="Continue"

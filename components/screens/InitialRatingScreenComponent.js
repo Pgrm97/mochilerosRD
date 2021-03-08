@@ -67,17 +67,29 @@ class InitialRatingScreen extends Component {
 
   uploadRatingToDB = () => {
 
-    database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.placeKey + "%" + "cloudy-<30-weekday").set({
+      database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.placeKey + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.time).set({
+        userID: this.state.user.users[0].id,
+        placeID: this.state.placeKey,
+        rating: this.state.rating,
+        weekend: this.state.time,
+        weather: this.state.weather,
+        temp: this.state.temperature
+        }).then(() => {
+      }).catch((error) => {
+          console.log(error);
+      })
+
+      database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.placeKey + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.time).set({
       userID: this.state.user.users[0].id,
       placeID: this.state.placeKey,
       rating: this.state.rating,
       weekend: this.state.time,
       weather: this.state.weather,
       temp: this.state.temperature
-    }).then(() => {
-  }).catch((error) => {
-      console.log(error);
-  })
+      }).then(() => {
+    }).catch((error) => {
+        console.log(error);
+    })
   }
 
     render(){
