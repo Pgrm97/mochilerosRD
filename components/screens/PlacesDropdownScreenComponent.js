@@ -28,13 +28,13 @@ class PlacesDropdownScreen extends Component {
             places: [],
 
 
-            weather: 'Sunny',
+            weather: 'Cloudy',
             place_name: '',
             image_url: '',
             address: '',
 
             place: '',
-            default_weather: 'sunny',            
+            default_weather: 'cloudy',            
             weekend: 1,
             temperature: 0,
             rating: 0,
@@ -52,6 +52,7 @@ class PlacesDropdownScreen extends Component {
                 label: this.props.places.places[place].name, value: place
             })
         }
+        this.randomPlace();
     }
 
     uploadRatingToDB = () => {
@@ -85,6 +86,17 @@ class PlacesDropdownScreen extends Component {
       })
     }
 
+    randomPlace = () => {
+        var random = Math.floor(Math.random() * 30);
+        var place_to_present = this.state.places[random].value;
+        this.setState({
+            place: place_to_present,
+            place_name: this.props.places.places[place_to_present].name,
+            image_url: this.props.places.places[place_to_present].img_url,
+            address: this.props.places.places[place_to_present].address
+        });        
+    }
+
     ratingCompleted = (rating) => {
         this.setState({rating: rating});
     }
@@ -108,6 +120,7 @@ class PlacesDropdownScreen extends Component {
                     <DropDownPicker
                         items={this.state.places}
                         style={{paddingVertical: 10, paddingHorizontal: 100}}
+                        defaultValue={this.state.place}
                         onChangeItem={item => this.setState({
                             place: item.value,
                             place_name: this.props.places.places[item.value].name,
@@ -137,13 +150,17 @@ class PlacesDropdownScreen extends Component {
                     defaultRating={this.state.rating}
                     onFinishRating={this.ratingCompleted}
                     />
-                <Button
-                    title="Rate"
-                    onPress={ () => {
-                    this.uploadRatingToDB();
-                    }}
-                    type="solid"
-                />                   
+                <View style={{marginBottom: 30, marginTop: 10}}>
+                    <Button color="#00008B"
+                        title="Rate"
+                        onPress={ () => {
+                            this.uploadRatingToDB();
+                            this.randomPlace();
+                        }}
+                        type="solid"
+                    />      
+                </View>
+                             
                             
                 <Button
                       title="Continue"
