@@ -104,41 +104,18 @@ class PlacesDropdownScreen extends Component {
     render(){
         return(
             <View style = {styles.container}>
-                <View style = {{flexDirection: 'row',marginBottom: 200}}>
-                    <DropDownPicker
-                        items={[
-                            {label: this.state.english.sunny , value: 'sunny'},
-                            {label: this.state.english.cloudy, value: 'cloudy'},
-                            {label: this.state.english.rain, value: 'rain'},
-                        ]}
-                        defaultValue={this.state.default_weather}
-                        onChangeItem={item => this.setState({
-                            default_weather: item.value,
-                            weather: item.label
-                        })}
+                <View style = {{marginBottom: -10}}>
+                    <CheckBox
+                        title='Is it a weekend?'
+                        checked={this.state.weekend}
+                        onPress={() => this.setState({weekend: !this.state.weekend})}
                     />
-                    <DropDownPicker
-                        items={this.state.places}
-                        style={{paddingVertical: 10, paddingHorizontal: 100}}
-                        defaultValue={this.state.place}
-                        onChangeItem={item => this.setState({
-                            place: item.value,
-                            place_name: this.props.places.places[item.value].name,
-                            image_url: this.props.places.places[item.value].img_url,
-                            address: this.props.places.places[item.value].address
-                        })}
+                    <CheckBox
+                        title='Is it hotter than 30°C?'
+                        checked={this.state.temperature}
+                        onPress={() => this.setState({temperature: !this.state.temperature})}
                     />
                 </View>
-                <CheckBox
-                    title='Is it a weekend?'
-                    checked={this.state.weekend}
-                    onPress={() => this.setState({weekend: !this.state.weekend})}
-                />
-                <CheckBox
-                    title='Is it hotter than 30°C?'
-                    checked={this.state.temperature}
-                    onPress={() => this.setState({temperature: !this.state.temperature})}
-                />
                 <RecommendationCard 
                     title={this.state.place_name}
                     context={this.state.weather + this.state.emoji + " Day"}
@@ -169,6 +146,31 @@ class PlacesDropdownScreen extends Component {
                       }}
                       type="solid"
                   />
+                  <View style = {{flexDirection: 'row',marginTop: 200}}>
+                    <DropDownPicker
+                        items={[
+                            {label: this.state.english.sunny , value: 'sunny'},
+                            {label: this.state.english.cloudy, value: 'cloudy'},
+                            {label: this.state.english.rain, value: 'rain'},
+                        ]}
+                        defaultValue={this.state.default_weather}
+                        onChangeItem={item => this.setState({
+                            default_weather: item.value,
+                            weather: item.label
+                        })}
+                    />
+                    <DropDownPicker
+                        items={this.state.places}
+                        style={{paddingVertical: 10, paddingHorizontal: 100}}
+                        defaultValue={this.state.place}
+                        onChangeItem={item => this.setState({
+                            place: item.value,
+                            place_name: this.props.places.places[item.value].name,
+                            image_url: this.props.places.places[item.value].img_url,
+                            address: this.props.places.places[item.value].address
+                        })}
+                    />
+                </View>
             </View>
         )
     }
