@@ -108,12 +108,24 @@ class PlacesDropdownScreen extends Component {
                     <CheckBox
                         title='Is it a weekend?'
                         checked={this.state.weekend}
-                        onPress={() => this.setState({weekend: !this.state.weekend})}
+                        onPress={() => {
+                            if(this.state.weekend == 0)
+                                this.setState({weekend: 1});
+                            else
+                                this.setState({weekend: 0});
+                        }
+                    }
                     />
                     <CheckBox
                         title='Is it hotter than 30°C?'
                         checked={this.state.temperature}
-                        onPress={() => this.setState({temperature: !this.state.temperature})}
+                        onPress={() => {
+                                if(this.state.temperature == 0)
+                                    this.setState({temperature: 1});
+                                else
+                                    this.setState({temperature: 0});
+                            }
+                        }
                     />
                 </View>
                 <RecommendationCard 
