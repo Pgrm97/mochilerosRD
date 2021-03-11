@@ -15,7 +15,9 @@ class InitialRatingScreen extends Component {
         data: '',
         weather: '',
         time: '',
+        time_word: '',
         temperature: '',
+        temperature_word: '',
         emoji: '',
         user: this.props.users,
         rating: 0
@@ -29,9 +31,9 @@ class InitialRatingScreen extends Component {
       .then((response) => response.json())
       .then(context => {
         if((context.current.temp - 273.15).toFixed() < 30)
-                this.setState({temperature: 0})
+          this.setState({temperature: 0, temperature_word: 'Warm'})
         else
-        this.setState({temperature: 1})
+          this.setState({temperature: 1, temperature_word: 'Hot'})
         if(context.current.weather[0].main == "Clouds")
           this.setState({weather: 'Cloudy', emoji: '☁️'});
         else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
@@ -51,9 +53,9 @@ class InitialRatingScreen extends Component {
   getDate = () => {
     var dt = new Date().getDate();
     if (dt == 0 || dt == 6)
-      this.setState({time: 1});
+      this.setState({time: 1, time_word: 'Weekend'});
     else
-      this.setState({time: 0});
+      this.setState({time: 0, time_word: 'Weekday'});
   }
 
   accessDBPlaces = () => {
@@ -98,7 +100,7 @@ class InitialRatingScreen extends Component {
               <Text h4>How would you rate?</Text>
               <RecommendationCard 
                   title={this.state.data.name}
-                  context={this.state.weather + this.state.emoji + " Day"}
+                  context={this.state.temperature_word + ' ' + this.state.weather + this.state.emoji + ' ' + this.state.time_word}
                   in="in"
                   image_url={this.state.data.img_url}
                   directions={"Located in " + this.state.data.address}
