@@ -22,22 +22,24 @@ class PlacesDropdownScreen extends Component {
             english: {
                 sunny: "Sunny",
                 cloudy: "Cloudy",
-                rain: "Rain"
+                rain: "Rainy"
             },
             emoji: '',
             places: [],
 
 
-            weather: 'Cloudy',
+            weather: 'Sunny',
             place_name: '',
             image_url: '',
             address: '',
 
             place: '',
-            default_weather: 'cloudy',            
-            weekend: 1,
+            default_weather: 'sunny',            
+            weekend: 0,
             temperature: 0,
             rating: 0,
+
+            rating_counter: 0,
 
             user: this.props.users
 
@@ -97,6 +99,58 @@ class PlacesDropdownScreen extends Component {
         });        
     }
 
+    increaseRating = () => {
+        var counter = this.state.rating_counter + 1;
+        this.setState({
+            rating_counter: counter
+        });
+        console.log(counter);
+        if(counter%5 == 0){
+            if(this.state.weekend == 0){
+                this.setState({
+                    weekend: 1
+                });
+            }
+            else{
+                this.setState({
+                    weekend: 0
+                });
+            }            
+        }
+        if(counter%10 == 0){
+            if(this.state.temperature == 0){
+                this.setState({
+                    temperature: 1
+                });
+            }
+            else{
+                this.setState({
+                    temperature: 0
+                });
+            }            
+        }
+        if(counter%15 == 0){
+            if(this.state.default_weather == 'cloudy'){
+                this.setState({
+                    default_weather: 'sunny',
+                    weather: 'Sunny'
+                });
+            }
+            if(this.state.default_weather == 'sunny'){
+                this.setState({
+                    default_weather: 'rain',
+                    weather: 'Rainy'
+                });
+            }
+            else{
+                this.setState({
+                    default_weather: 'cloudy',
+                    weather: 'Cloudy'
+                });
+            }            
+        }
+    }
+
     ratingCompleted = (rating) => {
         this.setState({rating: rating});
     }
@@ -104,7 +158,7 @@ class PlacesDropdownScreen extends Component {
     render(){
         return(
             <View style = {styles.container}>
-                <View style = {{marginBottom: -10}}>
+                {/* <View style = {{marginBottom: -15}}>
                     <CheckBox
                         title='Is it a weekend?'
                         checked={this.state.weekend}
@@ -127,7 +181,7 @@ class PlacesDropdownScreen extends Component {
                             }
                         }
                     />
-                </View>
+                </View> */}
                 <RecommendationCard 
                     title={this.state.place_name}
                     context={this.state.weather + this.state.emoji + " Day"}
@@ -139,10 +193,11 @@ class PlacesDropdownScreen extends Component {
                     defaultRating={this.state.rating}
                     onFinishRating={this.ratingCompleted}
                     />
-                <View style={{marginBottom: 30, marginTop: 10}}>
+                <View style={{marginBottom: 15, marginTop: 10}}>
                     <Button color="#00008B"
                         title="Rate"
                         onPress={ () => {
+                            this.increaseRating();
                             this.uploadRatingToDB();
                             this.randomPlace();
                         }}
