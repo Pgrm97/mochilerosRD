@@ -39,11 +39,11 @@ class Main extends Component {
                         name="Description"
                         component={Description}
                     />
-                    <Stack.Screen
+                    {/* <Stack.Screen
                         name="InitialRating"
                         component={InitialRatingScreen}
                         options={{title:'Initial Ratings'}}
-                    />
+                    /> */}
                     <Stack.Screen
                         name="PlacesDropdown"
                         component={PlacesDropdownScreen}

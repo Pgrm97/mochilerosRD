@@ -26,7 +26,7 @@ class Description extends Component{
                 <Button
                     style={{marginTop: 50}}
                     title="Continue"
-                    onPress={ () => this.props.navigation.navigate('InitialRating')}
+                    onPress={ () => this.props.navigation.navigate('PlacesDropdown')}
                     type="solid"
                 />
             </View>
