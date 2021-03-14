@@ -35,13 +35,13 @@ class InitialRatingScreen extends Component {
         else
           this.setState({temperature: 1, temperature_word: 'Hot'})
         if(context.current.weather[0].main == "Clouds")
-          this.setState({weather: 'Cloudy', emoji: '☁️'});
+          this.setState({weather: 'cloudy', emoji: '☁️'});
         else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
-          this.setState({weather: 'Rainy', emoji: '🌧️'});
+          this.setState({weather: 'rainy', emoji: '🌧️'});
         else if (context.current.weather[0].main == "Clear")
-          this.setState({weather: 'Sunny', emoji: '☀️'});
+          this.setState({weather: 'sunny', emoji: '☀️'});
         else
-          this.setState({weather: 'Cloudy', emoji: '☁️'});
+          this.setState({weather: 'cloudy', emoji: '☁️'});
         //alert("Today is a " + this.getDate() + " with " + context.current.weather[0].description + " and the temperature is around " + (context.current.temp - 273.15).toFixed() + "C");
       });
   }
