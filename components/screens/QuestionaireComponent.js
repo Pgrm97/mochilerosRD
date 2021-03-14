@@ -68,9 +68,13 @@ class Questionaire extends Component{
     }
 
     uploadToFirebase = () => {
+        var username = this.state.email.replaceAll('.','-');
 
-        database.ref('users/' + this.state.email.split('@')[0] + '-' + this.state.email.split('@')[1].split('.')[0] 
-        + '-' + this.state.email.split('@')[1].split('.')[1]).set({
+        username = username.split('@')[0] + '-' + username.split('@')[1];
+
+        console.log(username);
+
+        database.ref('users/' + username).set({
             display_name: this.state.display_name,
             email: this.state.email,
             birthDate: this.state.date.toISOString(),
@@ -81,8 +85,7 @@ class Questionaire extends Component{
         })
 
         this.props.onAddUser([{
-            id: this.state.email.split('@')[0] + '-' + this.state.email.split('@')[1].split('.')[0] 
-            + '-' + this.state.email.split('@')[1].split('.')[1],
+            id: username,
             display_name: this.state.display_name,
             email: this.state.email,
             birthDate: this.state.date.toISOString(),
