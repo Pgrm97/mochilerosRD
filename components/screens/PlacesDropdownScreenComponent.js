@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button } from 'react-native'
-import { CheckBox, AirbnbRating } from 'react-native-elements'
+import { View, StyleSheet, Button, ScrollView } from 'react-native'
+import { CheckBox } from 'react-native-elements'
+import { AirbnbRating } from 'react-native-ratings'
 import { database } from '../../config';
 import { connect } from 'react-redux'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -28,15 +29,17 @@ class PlacesDropdownScreen extends Component {
             places: [],
 
 
-            weather: 'Sunny',
+            weather: 'Cloudy',
             place_name: '',
             image_url: '',
             address: '',
 
             place: '',
-            default_weather: 'sunny',            
+            default_weather: 'cloudy',            
             weekend: 0,
+            weekend_name: 'Weekday',
             temperature: 0,
+            temperature_name: 'Warm',
             rating: 0,
 
             rating_counter: 0,
@@ -84,7 +87,7 @@ class PlacesDropdownScreen extends Component {
       })
 
       this.setState({
-          rating: 0
+          rating: false
       })
     }
 
@@ -108,46 +111,53 @@ class PlacesDropdownScreen extends Component {
         if(counter%5 == 0){
             if(this.state.weekend == 0){
                 this.setState({
-                    weekend: 1
+                    weekend: 1,
+                    weekend_name: 'Weekend'
                 });
             }
             else{
                 this.setState({
-                    weekend: 0
+                    weekend: 0,
+                    weekend_name: 'Weekday'
                 });
             }            
         }
         if(counter%10 == 0){
             if(this.state.temperature == 0){
                 this.setState({
-                    temperature: 1
+                    temperature: 1,
+                    temperature_name: 'Hot'
                 });
             }
             else{
                 this.setState({
-                    temperature: 0
+                    temperature: 0,
+                    temperature_name: 'Warm'
                 });
             }            
         }
-        if(counter%15 == 0){
+        if(counter%5 == 0){
             if(this.state.default_weather == 'cloudy'){
                 this.setState({
-                    default_weather: 'sunny',
+                    default_weather: 'sunny', emoji: '☀️',
                     weather: 'Sunny'
                 });
             }
             if(this.state.default_weather == 'sunny'){
                 this.setState({
-                    default_weather: 'rain',
+                    default_weather: 'rain', emoji: '🌧️',
                     weather: 'Rainy'
                 });
             }
-            else{
+            if(this.state.default_weather == 'rain'){
                 this.setState({
-                    default_weather: 'cloudy',
+                    default_weather: 'cloudy', emoji: '☁️',
                     weather: 'Cloudy'
                 });
-            }            
+            }       
+        }
+        if(counter == 15){
+            
         }
     }
 
@@ -157,7 +167,7 @@ class PlacesDropdownScreen extends Component {
 
     render(){
         return(
-            <View style = {styles.container}>
+            <View style = {styles.container}>                
                 {/* <View style = {{marginBottom: -15}}>
                     <CheckBox
                         title='Is it a weekend?'
@@ -184,7 +194,7 @@ class PlacesDropdownScreen extends Component {
                 </View> */}
                 <RecommendationCard 
                     title={this.state.place_name}
-                    context={this.state.weather + this.state.emoji + " Day"}
+                    context={this.state.weather + this.state.emoji + ' ' + this.state.weekend_name}
                     in="in"
                     image_url={this.state.image_url}
                     directions={"Located in " + this.state.address}
@@ -213,7 +223,7 @@ class PlacesDropdownScreen extends Component {
                       }}
                       type="solid"
                   />
-                  <View style = {{flexDirection: 'row',marginTop: 200}}>
+                  {/* <View style = {{flexDirection: 'row',marginTop: 200}}>
                     <DropDownPicker
                         items={[
                             {label: this.state.english.sunny , value: 'sunny'},
@@ -237,7 +247,7 @@ class PlacesDropdownScreen extends Component {
                             address: this.props.places.places[item.value].address
                         })}
                     />
-                </View>
+                </View> */}
             </View>
         )
     }
