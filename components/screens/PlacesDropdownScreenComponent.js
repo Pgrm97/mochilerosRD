@@ -44,7 +44,9 @@ class PlacesDropdownScreen extends Component {
 
             rating_counter: 0,
 
-            user: this.props.users
+            user: this.props.users,
+
+            places_ids: ["playa+dorada", "playa+grande", "playa+costambar", "playa+long+beach", "cayo+arena", "teleferico+puerto+plata", "27+charcos+damajagua", "fortaleza+san+felipe", "macorix+tour+ron", "malecon+puerto+plata", "museo+ambar+dominicano", "del+oro+chocolate+factory", "monkey+jungle+dr", "museo+gregorio+luperon", "dressel+divers+puerto+plata", "restaurant+le+papillon", "ristorante+passatore", "los+tres+cocos", "mares+restaurant", "kaffe", "la+tarappa+pizzeria", "table+one+costambar", "tio+pan+panaderia", "bergatin+caribbean+grill", "green+jack+tar", "senor+rock+bar", "le+petit+francois", "gastro+gallery+market", "casa+40", "la+locanda+pop"]
 
         };
 
@@ -94,11 +96,15 @@ class PlacesDropdownScreen extends Component {
     randomPlace = () => {
         var random = Math.floor(Math.random() * 30);
         var place_to_present = this.state.places[random].value;
+        // var removed_place_array = this.state.places_ids;
+        // removed_place_array.filter(place_to_present);
+        // console.log(removed_place_array.length());
         this.setState({
             place: place_to_present,
             place_name: this.props.places.places[place_to_present].name,
             image_url: this.props.places.places[place_to_present].img_url,
-            address: this.props.places.places[place_to_present].address
+            address: this.props.places.places[place_to_present].address//,
+            // places_ids: removed_place_array
         });        
     }
 
