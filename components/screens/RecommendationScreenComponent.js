@@ -2,15 +2,59 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { Card, Text, Rating, AirbnbRating, Button } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
+import { database } from '../../config';
+import { connect } from 'react-redux'
 import RecommendationCard from '../CardComponent';
 
 class RecommendationScreen extends Component {
     constructor(props){
         super(props);
+        const { users } = props;
         this.state = {
-
+            user: this.props.users,
+            temperature: -1,
+            weather: '',
+            weekend: '',
+            emoji: ''
         }
     }
+
+    componentDidMount(){
+        this.getDate();
+        fetch('https://api.openweathermap.org/data/2.5/onecall?lat=19.790217&lon=-70.690793&exclude=minutely,daily,hourly,alerts&appid=70263032a30d9564a024794abb3ea050')
+        .then((response) => response.json())
+        .then(context => {
+            if((context.current.temp - 273.15).toFixed() < 30)
+                this.setState({temperature: 0, temperature_word: 'Warm'});
+            else
+                this.setState({temperature: 1, temperature_word: 'Hot'});
+            console.log(this.state.temperature);
+            if(context.current.weather[0].main == "Clouds")
+                this.setState({weather: 'cloudy', emoji: '☁️'});
+            else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
+                this.setState({weather: 'rain', emoji: '🌧️'});
+            else if (context.current.weather[0].main == "Clear")
+                this.setState({weather: 'sunny', emoji: '☀️'});
+            else
+                this.setState({weather: 'cloudy', emoji: '☁️'});
+            console.log("recommendations/"  + this.state.user.users[0].id + "/" 
+                + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations");
+
+            //alert("Today is a " + this.getDate() + " with " + context.current.weather[0].description + " and the temperature is around " + (context.current.temp - 273.15).toFixed() + "C");
+        });
+        // database.ref('recommendations/' + this.state.user.users[0].id).once('value').then((snapshot) => {
+        //     console.log('recommendations/' + user);
+        //     return dispatch(addPlaces(snapshot.val()));
+        // });
+    }
+
+    getDate = () => {
+        var dt = new Date().getDate();
+        if (dt == 0 || dt == 6)
+          this.setState({weekend: 1});
+        else
+          this.setState({weekend: 0});
+      }
 
     render(){
         return(
@@ -39,10 +83,18 @@ class RecommendationScreen extends Component {
     };
 }
 
+const mapStateToProps = (state) => ({
+    users: state.users
+  })
+  
+  const RecommendationScreenRedux = connect(mapStateToProps)(
+    RecommendationScreen
+  );
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
 });
 
-export default RecommendationScreen;
+export default RecommendationScreenRedux;
