@@ -37,15 +37,13 @@ class RecommendationScreen extends Component {
                 this.setState({weather: 'sunny', emoji: '☀️'});
             else
                 this.setState({weather: 'cloudy', emoji: '☁️'});
-            console.log("recommendations/"  + this.state.user.users[0].id + "/" 
-                + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations");
 
-            //alert("Today is a " + this.getDate() + " with " + context.current.weather[0].description + " and the temperature is around " + (context.current.temp - 273.15).toFixed() + "C");
+            database.ref("recommendations/"  + this.state.user.users[0].id + "/" 
+            + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations").once('value').then((snapshot) => {
+                console.log(snapshot.val());
+            });
         });
-        // database.ref('recommendations/' + this.state.user.users[0].id).once('value').then((snapshot) => {
-        //     console.log('recommendations/' + user);
-        //     return dispatch(addPlaces(snapshot.val()));
-        // });
+        
     }
 
     getDate = () => {
