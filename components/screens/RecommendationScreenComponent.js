@@ -5,12 +5,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { database } from '../../config';
 import { connect } from 'react-redux'
 import RecommendationCard from '../CardComponent';
-import { fetchRecommendations } from '../../redux/ActionCreators'
+import { fetchRecommendations, addSelectedPlace } from '../../redux/ActionCreators'
 
 class RecommendationScreen extends Component {
     constructor(props){
         super(props);
-        const { users, fetchRecommendations } = props;
+        const { users, fetchRecommendations, addSelectedPlace } = props;
         this.state = {
             user: this.props.users,
             temperature: -1,
@@ -58,7 +58,10 @@ class RecommendationScreen extends Component {
     render(){
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
-                <Pressable onPress={() => this.props.navigation.navigate('DetailCardScreen')}>
+                <Pressable onPress={() => {
+                        this.props.addSelectedPlace(["selected", "4.005"]);
+                        this.props.navigation.navigate('DetailCardScreen')
+                    }}>
                     <RecommendationCard 
                         title="Los Tres Cocos" 
                         description="Dominican Restaurant"
@@ -86,7 +89,7 @@ const mapStateToProps = (state) => ({
     users: state.users
   })
   
-  const RecommendationScreenRedux = connect(mapStateToProps, {fetchRecommendations})(
+  const RecommendationScreenRedux = connect(mapStateToProps, {fetchRecommendations, addSelectedPlace})(
     RecommendationScreen
   );
 

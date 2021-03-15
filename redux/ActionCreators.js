@@ -9,9 +9,8 @@ export const fetchPlaces = () => (dispatch) => {
 }
 
 export const fetchRecommendations = (user) => (dispatch) => {
-    database.ref('recommendations/' + user).once('value').then((snapshot) => {
-        console.log('recommendations/' + user);
-        return dispatch(addPlaces(snapshot.val()));
+    database.ref('recommendations/' + user + '/' + "recommendations").once('value').then((snapshot) => {
+        return dispatch(addRecommendations(snapshot.val()));
     });
 }
 
@@ -81,4 +80,18 @@ export const recommendationsFailed = (errMessage) => ({
 export const addRecommendations = (recommendations) => ({
     type:ActionTypes.ADD_RECOMMENDATIONS,
     payload: recommendations
+});
+
+export const addSelectedPlace = (selected) => ({
+    type:ActionTypes.ADD_SELECTED_PLACE,
+    payload: selected
+});
+
+export const selectedPlaceLoading = () => ({
+    type: ActionTypes.SELECTED_PLACE_LOADING
+});
+
+export const selectedPlaceFailed = (errMessage) => ({
+    type: ActionTypes.SELECTED_PLACE_FAILED,
+    payload: errMessage
 });
