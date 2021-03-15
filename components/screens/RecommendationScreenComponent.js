@@ -5,11 +5,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { database } from '../../config';
 import { connect } from 'react-redux'
 import RecommendationCard from '../CardComponent';
+import { fetchRecommendations } from '../../redux/ActionCreators'
 
 class RecommendationScreen extends Component {
     constructor(props){
         super(props);
-        const { users } = props;
+        const { users, fetchRecommendations } = props;
         this.state = {
             user: this.props.users,
             temperature: -1,
@@ -28,7 +29,6 @@ class RecommendationScreen extends Component {
                 this.setState({temperature: 0, temperature_word: 'Warm'});
             else
                 this.setState({temperature: 1, temperature_word: 'Hot'});
-            console.log(this.state.temperature);
             if(context.current.weather[0].main == "Clouds")
                 this.setState({weather: 'cloudy', emoji: '☁️'});
             else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
@@ -38,10 +38,11 @@ class RecommendationScreen extends Component {
             else
                 this.setState({weather: 'cloudy', emoji: '☁️'});
 
-            database.ref("recommendations/"  + this.state.user.users[0].id + "/" 
-            + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations").once('value').then((snapshot) => {
-                console.log(snapshot.val());
-            });
+            // database.ref("recommendations/"  + this.state.user.users[0].id + "/" 
+            // + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations").once('value').then((snapshot) => {
+            //     console.log(snapshot.val());
+            // });
+            this.props.fetchRecommendations(this.state.user.users[0].id + "/" + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend)
         });
         
     }
@@ -85,7 +86,7 @@ const mapStateToProps = (state) => ({
     users: state.users
   })
   
-  const RecommendationScreenRedux = connect(mapStateToProps)(
+  const RecommendationScreenRedux = connect(mapStateToProps, {fetchRecommendations})(
     RecommendationScreen
   );
 
