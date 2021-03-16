@@ -10,7 +10,7 @@ import { fetchRecommendations, addSelectedPlace } from '../../redux/ActionCreato
 class RecommendationScreen extends Component {
     constructor(props){
         super(props);
-        const { users, fetchRecommendations, addSelectedPlace } = props;
+        const { users, recommendations, places, fetchRecommendations, addSelectedPlace } = props;
         this.state = {
             user: this.props.users,
             temperature: -1,
@@ -56,37 +56,33 @@ class RecommendationScreen extends Component {
       }
 
     render(){
+        var cards = [];
+        this.props.recommendations.recommendations.map((recommendation) => {
+            cards.push(
+            <Pressable onPress={() => {
+                this.props.addSelectedPlace([recommendation.itemID, recommendation.rating]);
+                this.props.navigation.navigate('DetailCardScreen')
+            }}>
+                <RecommendationCard 
+                    title={this.props.places.places[recommendation.itemID].name}
+                    description={this.props.places.places[recommendation.itemID].address}
+                    image_url={this.props.places.places[recommendation.itemID].img_url}/>
+            </Pressable>
+        )
+            console.log(recommendation);
+        })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
-                <Pressable onPress={() => {
-                        this.props.addSelectedPlace(["selected", "4.005"]);
-                        this.props.navigation.navigate('DetailCardScreen')
-                    }}>
-                    <RecommendationCard 
-                        title="Los Tres Cocos" 
-                        description="Dominican Restaurant"
-                        image_url="https://lh5.googleusercontent.com/p/AF1QipOMjPft5k_xbH7Xmy4HNxrSyzJAPZOiBYNGswvr=s1031-k-no"/>
-                </Pressable>
-                <Pressable onPress={() => this.props.navigation.navigate('DetailCardScreen')}>
-                    <RecommendationCard 
-                        title="Ristorante Passatore" 
-                        description="Italian Restaurant"
-                        image_url="https://lh5.googleusercontent.com/p/AF1QipNpQiLaIezHQ_81GzDmuYfLk2UL2foC0NaCbnVF=s1031-k-no"/>
-                </Pressable>
-                <Pressable onPress={() => this.props.navigation.navigate('DetailCardScreen')}>
-                    <RecommendationCard 
-                        title="Playa Dorada"
-                        description="Beach"
-                        image_url="https://lh5.googleusercontent.com/p/AF1QipNLkGOoA8SDNECWJ_CrkLmwIlD27yM6rUwVE5w=s1160-k-no"/>
-                </Pressable>
-            </ScrollView>
-            
+                {cards}
+            </ScrollView>            
         );
     };
 }
 
 const mapStateToProps = (state) => ({
-    users: state.users
+    users: state.users,
+    places: state.places,
+    recommendations: state.recommendations
   })
   
   const RecommendationScreenRedux = connect(mapStateToProps, {fetchRecommendations, addSelectedPlace})(
