@@ -53,12 +53,6 @@ class PlacesDropdownScreen extends Component {
     }
 
     componentDidMount(){
-        //Creates the dropdown with all places.
-        for(let place in this.props.places.places){
-            this.state.places.push({
-                label: this.props.places.places[place].name, value: place
-            })
-        }
         this.randomPlace();
     }
 
@@ -94,7 +88,16 @@ class PlacesDropdownScreen extends Component {
     }
 
     randomPlace = () => {
+        if (this.state.places.length < 30){
+            //Creates the dropdown with all places.
+            for(let place in this.props.places.places){
+                this.state.places.push({
+                    label: this.props.places.places[place].name, value: place
+                })
+            }
+        }
         var random = Math.floor(Math.random() * 30);
+        console.log(random);
         var place_to_present = this.state.places[random].value;
         // var removed_place_array = this.state.places_ids;
         // removed_place_array.filter(place_to_present);
