@@ -16,7 +16,8 @@ class RecommendationScreen extends Component {
             temperature: -1,
             weather: '',
             weekend: '',
-            emoji: ''
+            emoji: '',
+            weekend_word: ''
         }
     }
 
@@ -50,9 +51,9 @@ class RecommendationScreen extends Component {
     getDate = () => {
         var dt = new Date().getDate();
         if (dt == 0 || dt == 6)
-          this.setState({weekend: 1});
+          this.setState({weekend: 1, weekend_word: 'Weekend'});
         else
-          this.setState({weekend: 0});
+          this.setState({weekend: 0, weekend_word: 'Weekday'});
       }
 
     render(){
@@ -72,6 +73,7 @@ class RecommendationScreen extends Component {
         })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
+                <Text h3 style={textStyles.bold}>{this.state.temperature_word + ' ' + this.state.emoji + ' ' + this.state.weekend_word}</Text>
                 {cards}
             </ScrollView>            
         );
@@ -92,6 +94,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+});
+
+const textStyles = StyleSheet.create({
+    bold: {fontWeight: 'bold', color: 'blue'},
+    underline: {textDecorationLine: 'underline'}
 });
 
 export default RecommendationScreenRedux;
