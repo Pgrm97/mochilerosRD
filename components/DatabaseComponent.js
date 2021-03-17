@@ -14,7 +14,6 @@ class Database extends Component{
 
     componentDidMount() {
         database.ref('users').once('value').then((snapshot) => {
-            console.log(snapshot.child('pgrm97-gmail-com'));
             this.setState({document: snapshot.child('pgrm97-gmail-com/display_name').val()})
         })
     }
