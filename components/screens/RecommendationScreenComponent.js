@@ -59,17 +59,16 @@ class RecommendationScreen extends Component {
         var cards = [];
         this.props.recommendations.recommendations.map((recommendation) => {
             cards.push(
-            <Pressable onPress={() => {
-                this.props.addSelectedPlace([recommendation.itemID, recommendation.rating]);
-                this.props.navigation.navigate('DetailCardScreen')
-            }}>
-                <RecommendationCard 
-                    title={this.props.places.places[recommendation.itemID].name}
-                    description={this.props.places.places[recommendation.itemID].address}
-                    image_url={this.props.places.places[recommendation.itemID].img_url}/>
-            </Pressable>
-        )
-            console.log(recommendation);
+                <Pressable onPress={() => {
+                    this.props.addSelectedPlace([recommendation.itemID, recommendation.rating, this.state.weather + '+' + this.state.temperature + '+' + this.state.weekend]);
+                    this.props.navigation.navigate('DetailCardScreen')
+                }}>
+                    <RecommendationCard 
+                        title={this.props.places.places[recommendation.itemID].name}
+                        description={this.props.places.places[recommendation.itemID].address}
+                        image_url={this.props.places.places[recommendation.itemID].img_url}/>
+                </Pressable>
+            )
         })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>

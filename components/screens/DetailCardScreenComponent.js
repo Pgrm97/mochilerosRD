@@ -1,35 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Text, Rating, AirbnbRating, Button } from 'react-native-elements'
+import { Card, Text, Button } from 'react-native-elements'
+import { AirbnbRating } from 'react-native-ratings'
 import RecommendationCard from '../CardComponent';
-import * as Linking from 'expo-linking'
-
-var openMaps = (url) => {
-  Linking.openURL(url);
-};
+import { useSelector } from 'react-redux'
+import { database } from '../../config';
+import selected from '../../redux/reducers/selected_place';
 
 function DetailCardScreen(props) {
+    const selectedPlace = useSelector(state => state.selected.selected);
+    const places = useSelector(state => state.places.places);
+    const user = useSelector(state => state.users.users);
+
+    const [rating, setRating] = useState(0);
 
     return(
         <View style={ styles.container }>
-            <Button
-              title="Open in Google Maps"
-              onPress={ () => openMaps("https://www.google.com/maps/search/?api=1&query=" + "47.5951518" + "," + "-122.3316393" + "&query_place_id=" + "ChIJKxjxuaNqkFQR3CK6O1HNNqY") }
-              type="solid"
-              />
+            
             <RecommendationCard 
-                title="Playa Grande"
-                context="Sunny ☀️ Weekend"
-                in="in"
-                image_url="https://lh3.googleusercontent.com/p/AF1QipMi4kaK-EnSEEVCgAK3yaIBeEl05hQp5ebZOJhI=s1600-w800"
-                />
-            <Text h4>Did you visit this place? Add the date and rating!</Text>
-            <AirbnbRating 
-            defaultRating={0}/>
-            <Button
-                    title="Rate"
-                    type="solid"
-                />
+                title={places[selectedPlace[0]].name}
+                image_url={places[selectedPlace[0]].img_url}
+                description={places[selectedPlace[0]].address}
+                lat={places[selectedPlace[0]].lat}
+                lng={places[selectedPlace[0]].lng}
+                maps_place_id={places[selectedPlace[0]].maps_place_id}
+              />
+            <View style= {
+              {
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}
+            >
+              <Text>Did you visit this place? Add the date and rating!</Text>
+              <AirbnbRating 
+                defaultRating={rating}
+                onFinishRating={setRating}
+              />
+              <Button
+                      title="Rate"
+                      onPress={ () => {
+                        database.ref("ratings_recommendations_truth" + '/' + user[0].id + '/' +selectedPlace[0]+ '/' +selectedPlace[2]).set({
+                            user_id: user[0].id,
+                            place_id: selectedPlace[0],
+                            context: selectedPlace[2],
+                            predicted_rating: selectedPlace[1],
+                            actual_rating: rating
+                        })
+                      }}
+                      type="solid"
+                  />
+            </View>       
+            
         </View>
         
     );
@@ -37,9 +58,7 @@ function DetailCardScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
 });
 
