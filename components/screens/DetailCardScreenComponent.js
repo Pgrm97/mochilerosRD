@@ -45,7 +45,8 @@ function DetailCardScreen(props) {
                             context: selectedPlace[2],
                             predicted_rating: selectedPlace[1],
                             actual_rating: rating
-                        })
+                        });
+                        setRating(0);
                       }}
                       type="solid"
                   />
