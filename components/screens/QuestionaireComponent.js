@@ -68,7 +68,7 @@ class Questionaire extends Component{
     }
 
     uploadToFirebase = () => {
-        var username = this.state.email.replaceAll('.','-');
+        var username = this.state.email.split(".").join("-");
 
         username = username.split('@')[0] + '-' + username.split('@')[1];
 
