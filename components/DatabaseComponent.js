@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { database } from '../config';
+import i18n from './i18n'
 
 import { View, Text }from 'react-native'
 
@@ -24,7 +25,7 @@ class Database extends Component{
         
         return(            
             <View>
-                <Text>Created by {this.state.document}</Text>
+                <Text>{i18n.t("createdby")} {this.state.document}</Text>
             </View>
         );
     }
