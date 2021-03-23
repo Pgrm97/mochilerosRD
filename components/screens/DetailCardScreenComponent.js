@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux'
 import { database } from '../../config';
 import selected from '../../redux/reducers/selected_place';
 
+import I18n from '../i18n'
+
 function DetailCardScreen(props) {
     const selectedPlace = useSelector(state => state.selected.selected);
     const places = useSelector(state => state.places.places);
@@ -31,13 +33,13 @@ function DetailCardScreen(props) {
                 justifyContent: 'center'
               }}
             >
-              <Text>Did you visit this place? Add the date and rating!</Text>
+              <Text>{I18n.t("visit_rate_text")}</Text>
               <AirbnbRating 
                 defaultRating={rating}
                 onFinishRating={setRating}
               />
               <Button
-                      title="Rate"
+                      title={I18n.t("rate")}
                       onPress={ () => {
                         database.ref("ratings_recommendations_truth" + '/' + user[0].id + '/' +selectedPlace[0]+ '/' +selectedPlace[2]).set({
                             user_id: user[0].id,

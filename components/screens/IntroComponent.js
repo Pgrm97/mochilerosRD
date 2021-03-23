@@ -21,7 +21,7 @@ function Intro(props) {
             style={{width: 150, height: 150, marginBottom: 30 }} />
             <Button
               style={{marginTop: 50}}
-              title="Continue"
+              title={I18n.t("continue")}
               onPress={ () => props.navigation.navigate('Questionaire')}
               type="solid"
             />
