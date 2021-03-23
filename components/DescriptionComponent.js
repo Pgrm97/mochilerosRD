@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-elements'
 
+import I18n from "./i18n"
+
 class Description extends Component{
     constructor(props){
         super(props);
-
-        this.state = {
-            intro: "You're about to see",
-            adescription: "a description",
-            images: "and images of places to visit."
-        }
     }
 
     changeButtonFunction(){
@@ -20,9 +16,9 @@ class Description extends Component{
     render(){
         return(
             <View style={ styles.container }>
-                <Text h4>{this.state.intro}<Text h4 style = {textStyles.italic}> {this.state.adescription} </Text>{this.state.images + '\n'}</Text>
-                <Text h4>Read the description and imagine you're in this place. {'\n'}</Text>
-                <Text h4>Then give it a rating.{'\n'}</Text>
+                <Text h4>{I18n.t("introText")}<Text h4 style = {textStyles.italic}> {I18n.t("descriptionWord")} </Text>{I18n.t("imagesText") + '\n'}</Text>
+                <Text h4>{I18n.t("descriptionText")} {'\n'}</Text>
+                <Text h4>{I18n.t("ratingText")}{'\n'}</Text>
                 <Button
                     style={{marginTop: 50}}
                     title="Continue"
