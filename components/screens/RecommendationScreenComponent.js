@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import RecommendationCard from '../CardComponent';
 import { fetchRecommendations, addSelectedPlace } from '../../redux/ActionCreators'
 
+import I18n from '../i18n'
+
 class RecommendationScreen extends Component {
     constructor(props){
         super(props);
@@ -17,7 +19,8 @@ class RecommendationScreen extends Component {
             weather: '',
             weekend: '',
             emoji: '',
-            weekend_word: ''
+            weekend_word: '',
+            weather_word: ''
         }
     }
 
@@ -27,17 +30,17 @@ class RecommendationScreen extends Component {
         .then((response) => response.json())
         .then(context => {
             if((context.current.temp - 273.15).toFixed() < 30)
-                this.setState({temperature: 0, temperature_word: 'Warm'});
+                this.setState({temperature: 0, temperature_word: I18n.t("warm")});
             else
-                this.setState({temperature: 1, temperature_word: 'Hot'});
+                this.setState({temperature: 1, temperature_word: I18n.t("hot") });
             if(context.current.weather[0].main == "Clouds")
-                this.setState({weather: 'cloudy', emoji: '☁️'});
+                this.setState({weather: 'cloudy', emoji: '☁️', weather_word: I18n.t("cloudy")});
             else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
-                this.setState({weather: 'rain', emoji: '🌧️'});
+                this.setState({weather: 'rain', emoji: '🌧️', weather_word: I18n.t("rainy")});
             else if (context.current.weather[0].main == "Clear")
-                this.setState({weather: 'sunny', emoji: '☀️'});
+                this.setState({weather: 'sunny', emoji: '☀️', weather_word: I18n.t("sunny")});
             else
-                this.setState({weather: 'cloudy', emoji: '☁️'});
+                this.setState({weather: 'cloudy', emoji: '☁️', weather_word: I18n.t("cloudy")});
 
             // database.ref("recommendations/"  + this.state.user.users[0].id + "/" 
             // + this.state.weather +'+' + this.state.temperature + '+' + this.state.weekend + '/' + "recommendations").once('value').then((snapshot) => {
@@ -51,9 +54,9 @@ class RecommendationScreen extends Component {
     getDate = () => {
         var dt = new Date().getDate();
         if (dt == 0 || dt == 6)
-          this.setState({weekend: 1, weekend_word: 'Weekend'});
+          this.setState({weekend: 1, weekend_word: I18n.t("weekend")});
         else
-          this.setState({weekend: 0, weekend_word: 'Weekday'});
+          this.setState({weekend: 0, weekend_word: I18n.t("weekday")});
       }
 
     render(){
@@ -73,7 +76,7 @@ class RecommendationScreen extends Component {
         })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
-                <Text h3 style={textStyles.bold}>{this.state.temperature_word + ' ' + this.state.emoji + ' ' + this.state.weekend_word}</Text>
+                <Text h3 style={textStyles.bold}>{this.state.temperature_word + ' ' + this.state.weather_word + ' '+ this.state.emoji + ' ' + this.state.weekend_word}</Text>
                 {cards}
             </ScrollView>            
         );
