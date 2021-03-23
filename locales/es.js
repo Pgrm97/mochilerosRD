@@ -17,5 +17,16 @@ export default {
     ratingText: "Luego califícalo.",
     introText: "Estas a punto de ver",
     descriptionWord: "una descripción",
-    imagesText: "e imágenes de lugares a visitar."
+    imagesText: "e imágenes de lugares a visitar.",
+    //-----------------------------------------------
+    sunny: "Soleado",
+    cloudy: "Nublado",
+    rainy: "Lloviendo",
+    weekend: "Fin de Semana",
+    weekday: "Día de Semana",
+    hot: "Caliente",
+    warm: "Cálido",
+    in: "en",
+    rate: "Calificar",
+    continue: "Continuar"
 };

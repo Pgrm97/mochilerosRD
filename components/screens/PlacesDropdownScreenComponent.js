@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import RecommendationCard from '../CardComponent';
+import I18n from "../i18n"
 
 class PlacesDropdownScreen extends Component {
 
@@ -14,22 +15,11 @@ class PlacesDropdownScreen extends Component {
         super(props);
         const { users, places } = props;
         this.state = {
-
-            spanish: {
-                sunny: "Soleado",
-                cloudy: "Nublado",
-                rain: "Lloviendo"
-            },
-            english: {
-                sunny: "Sunny",
-                cloudy: "Cloudy",
-                rain: "Rainy"
-            },
-            emoji: '',
+            emoji: '☁️',
             places: [],
 
 
-            weather: 'Cloudy',
+            weather: I18n.t("cloudy"),
             place_name: '',
             image_url: '',
             address: '',
@@ -37,9 +27,9 @@ class PlacesDropdownScreen extends Component {
             place: '',
             default_weather: 'cloudy',            
             weekend: 0,
-            weekend_name: 'Weekday',
+            weekend_name: I18n.t("weekday"),
             temperature: 0,
-            temperature_name: 'Warm',
+            temperature_name: I18n.t("warm"),
             rating: 0,
 
             rating_counter: 0,
@@ -121,13 +111,13 @@ class PlacesDropdownScreen extends Component {
             if(this.state.weekend == 0){
                 this.setState({
                     weekend: 1,
-                    weekend_name: 'Weekend'
+                    weekend_name: I18n.t("weekend")
                 });
             }
             else{
                 this.setState({
                     weekend: 0,
-                    weekend_name: 'Weekday'
+                    weekend_name: I18n.t("weekday")
                 });
             }            
         }
@@ -135,13 +125,13 @@ class PlacesDropdownScreen extends Component {
             if(this.state.temperature == 0){
                 this.setState({
                     temperature: 1,
-                    temperature_name: 'Hot'
+                    temperature_name: I18n.t("hot")
                 });
             }
             else{
                 this.setState({
                     temperature: 0,
-                    temperature_name: 'Warm'
+                    temperature_name: I18n.t("warm")
                 });
             }            
         }
@@ -149,19 +139,19 @@ class PlacesDropdownScreen extends Component {
             if(this.state.default_weather == 'cloudy'){
                 this.setState({
                     default_weather: 'sunny', emoji: '☀️',
-                    weather: 'Sunny'
+                    weather: I18n.t("sunny")
                 });
             }
             if(this.state.default_weather == 'sunny'){
                 this.setState({
                     default_weather: 'rain', emoji: '🌧️',
-                    weather: 'Rainy'
+                    weather: I18n.t("rainy")
                 });
             }
             if(this.state.default_weather == 'rain'){
                 this.setState({
                     default_weather: 'cloudy', emoji: '☁️',
-                    weather: 'Cloudy'
+                    weather: I18n.t("cloudy")
                 });
             }       
         }
@@ -203,8 +193,8 @@ class PlacesDropdownScreen extends Component {
                 </View> */}
                 <RecommendationCard 
                     title={this.state.place_name}
-                    context={this.state.weather + this.state.emoji + ' ' + this.state.weekend_name}
-                    in="in"
+                    context={this.state.temperature_name + ' ' + this.state.weather + this.state.emoji + ' ' + this.state.weekend_name}
+                    in={I18n.t("in")}
                     image_url={this.state.image_url}
                     directions={"Located in " + this.state.address}
                     />
@@ -214,7 +204,7 @@ class PlacesDropdownScreen extends Component {
                     />
                 <View style={{marginBottom: 15, marginTop: 10}}>
                     <Button color="#00008B"
-                        title="Rate"
+                        title={I18n.t("rate")}
                         onPress={ () => {
                             this.increaseRating();
                             this.uploadRatingToDB();
@@ -226,7 +216,7 @@ class PlacesDropdownScreen extends Component {
                              
                             
                 <Button
-                      title="Continue"
+                      title={I18n.t("continue")}
                       onPress={ () => {
                         this.props.navigation.navigate('HomeScreen');
                       }}
