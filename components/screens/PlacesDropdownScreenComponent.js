@@ -48,29 +48,31 @@ class PlacesDropdownScreen extends Component {
 
     uploadRatingToDB = () => {
 
-        database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.place + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
-          userID: this.state.user.users[0].id,
-          placeID: this.state.place,
-          rating: this.state.rating,
-          weekend: this.state.weekend,
-          weather: this.state.default_weather,
-          temp: this.state.temperature
-          }).then(() => {
-        }).catch((error) => {
-            console.log(error);
-        })
-  
-        database.ref('ratings_organized/' + this.state.user.users[0].id + "/" + this.state.place + "/" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
-        userID: this.state.user.users[0].id,
-        placeID: this.state.place,
-        rating: this.state.rating,
-        weekend: this.state.weekend,
-        weather: this.state.default_weather,
-        temp: this.state.temperature
-        }).then(() => {
-      }).catch((error) => {
-          console.log(error);
-      })
+        if(this.state.rating != false){
+            database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.place + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+                userID: this.state.user.users[0].id,
+                placeID: this.state.place,
+                rating: this.state.rating,
+                weekend: this.state.weekend,
+                weather: this.state.default_weather,
+                temp: this.state.temperature
+                }).then(() => {
+              }).catch((error) => {
+                  console.log(error);
+              })
+        
+              database.ref('ratings_organized/' + this.state.user.users[0].id + "/" + this.state.place + "/" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+              userID: this.state.user.users[0].id,
+              placeID: this.state.place,
+              rating: this.state.rating,
+              weekend: this.state.weekend,
+              weather: this.state.default_weather,
+              temp: this.state.temperature
+              }).then(() => {
+            }).catch((error) => {
+                console.log(error);
+            });
+        }      
 
       this.setState({
           rating: false
@@ -99,6 +101,10 @@ class PlacesDropdownScreen extends Component {
             address: this.props.places.places[place_to_present].address//,
             // places_ids: removed_place_array
         });        
+    }
+
+    checkRating = () => {
+        
     }
 
     increaseRating = () => {
@@ -144,7 +150,7 @@ class PlacesDropdownScreen extends Component {
             }
             if(this.state.default_weather == 'sunny'){
                 this.setState({
-                    default_weather: 'rain', emoji: '🌧️',
+                    default_weather: 'rainy', emoji: '🌧️',
                     weather: I18n.t("rainy")
                 });
             }
@@ -162,6 +168,17 @@ class PlacesDropdownScreen extends Component {
 
     ratingCompleted = (rating) => {
         this.setState({rating: rating});
+    }
+
+    contextByLocale(locale){
+        var context = '';
+        if(locale == 'es'){
+            context = this.state.weekend_name + ' ' + this.state.temperature_name + ' y ' + this.state.weather + this.state.emoji 
+        }
+        if(locale == 'en'){
+            context = this.state.temperature_name + ' ' + this.state.weather + this.state.emoji + ' ' + this.state.weekend_name
+        }
+        return context;
     }
 
     render(){
@@ -193,10 +210,12 @@ class PlacesDropdownScreen extends Component {
                 </View> */}
                 <RecommendationCard 
                     title={this.state.place_name}
-                    context={this.state.temperature_name + ' ' + this.state.weather + this.state.emoji + ' ' + this.state.weekend_name}
+                    context={
+                        this.contextByLocale(I18n.locale)
+                    }
                     in={I18n.t("in")}
                     image_url={this.state.image_url}
-                    directions={"Located in " + this.state.address}
+                    directions={I18n.t("located_in") + " " + this.state.address}
                     />
                 <AirbnbRating 
                     defaultRating={this.state.rating}

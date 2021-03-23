@@ -36,7 +36,7 @@ class RecommendationScreen extends Component {
             if(context.current.weather[0].main == "Clouds")
                 this.setState({weather: 'cloudy', emoji: '☁️', weather_word: I18n.t("cloudy")});
             else if (context.current.weather[0].main == "Rain" || context.current.weather[0].main == "Thunderstorm")
-                this.setState({weather: 'rain', emoji: '🌧️', weather_word: I18n.t("rainy")});
+                this.setState({weather: 'rainy', emoji: '🌧️', weather_word: I18n.t("rainy")});
             else if (context.current.weather[0].main == "Clear")
                 this.setState({weather: 'sunny', emoji: '☀️', weather_word: I18n.t("sunny")});
             else
@@ -58,6 +58,18 @@ class RecommendationScreen extends Component {
         else
           this.setState({weekend: 0, weekend_word: I18n.t("weekday")});
       }
+    
+      contextByLocale(locale){
+        var context = '';
+        if(locale == 'es'){
+            context = this.state.weekend_word + ' ' + this.state.temperature_word + ' y ' + this.state.weather_word + this.state.emoji 
+        }
+        if(locale == 'en'){
+            context = this.state.temperature_word + ' ' + this.state.weather_word + ' '+ this.state.emoji + ' ' + this.state.weekend_word
+        }
+        console.log(context);
+        return context;
+    }
 
     render(){
         var cards = [];
@@ -76,7 +88,7 @@ class RecommendationScreen extends Component {
         })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
-                <Text h3 style={textStyles.bold}>{this.state.temperature_word + ' ' + this.state.weather_word + ' '+ this.state.emoji + ' ' + this.state.weekend_word}</Text>
+                <Text h3 style={textStyles.bold}>{this.contextByLocale(I18n.locale)}</Text>
                 {cards}
             </ScrollView>            
         );

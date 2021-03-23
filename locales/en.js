@@ -32,5 +32,6 @@ export default {
     continue: "Continue",
     recommendation_title: "Puerto Plata - Recommendations",
     recommendations_button: "Give me recommendations!",
-    visit_rate_text: "Did you visit this place? Add the date and rating!"
+    visit_rate_text: "Did you visit this place? Add the date and rating!",
+    located_in: "Located in"
 };

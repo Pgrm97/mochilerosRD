@@ -31,5 +31,8 @@ export default {
     continue: "Continuar",
     recommendation_title: "Recomendaciones de Puerto Plata",
     recommendations_button: "Dame recomendaciones!",
-    visit_rate_text: "Visitaste este lugar? Agrega la fecha y hora, luego califícalo!"
+    visit_rate_text: "Visitaste este lugar? Agrega la fecha y hora, luego califícalo!",
+    located_in: "Ubicado en",
+    es_un: "Es un",
+    es_una: "Es una"
 };
