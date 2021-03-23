@@ -6,6 +6,7 @@ import UselessTextInput from '../TextInputComponent';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { database } from '../../config'
 
+import I18n from "../i18n"
 import { connect } from 'react-redux'
 import { onAddUser } from '../../redux/ActionCreators'
 
@@ -14,17 +15,7 @@ class Questionaire extends Component{
         const { users, onAddUser } = props;
 
         super(props);
-        this.state = {
-            nameQuestion: "What is your name?",
-            emailQuestion: "What is your email address?",
-            birthDate: "What is your birth date?",
-            countryOfOrigin: "What is your country of origin?",
-            languageOfPreference: "What is your language of preference?",
-            buttonDate: "Choose a date",
-
-            textInputName: "Enter your full name",
-            textInputEmail: "Enter your e-mail address",
-            
+        this.state = {            
             display_name: "",
             email: "",
             country_of_origin: "",
@@ -98,11 +89,11 @@ class Questionaire extends Component{
 
     checkTextInput = () => {
         if(!this.state.display_name.trim()){
-            alert('Please enter name');
+            alert(I18n.t("enterName"));
             return 1;
         }
         if(!this.state.email.trim()){
-            alert('Please enter e-mail address');
+            alert(I18n.t("enterEmail"));
             return 1;
         }
         return 0;
@@ -131,25 +122,25 @@ class Questionaire extends Component{
             //TEXT STYLE INCORRECT BUT WORKS!
             <ScrollView>
                 <View style={styles.formRow}>
-                    <Text p style={styles.formLabel}>{this.state.nameQuestion}{'\n'}</Text>
+                    <Text p style={styles.formLabel}>{I18n.t("nameQuestion")}{'\n'}</Text>
                     <TextInput
                         style={styles.formItem}
-                        placeholder={this.state.textInputName}
+                        placeholder={I18n.t("textInputName")}
                         onChangeText={(text) => this.setState({display_name: text})}
                         value={this.state.display_name}
                     />
                 </View>
                 <View style={styles.formRow}>
-                    <Text p style={styles.formLabel}>{this.state.emailQuestion}{'\n'}</Text>
+                    <Text p style={styles.formLabel}>{I18n.t("emailQuestion")}{'\n'}</Text>
                     <TextInput
                         style={styles.formItem}
-                        placeholder={this.state.textInputEmail}
+                        placeholder={I18n.t("textInputEmail")}
                         onChangeText={(text) => this.setState({email: text})}
                         value={this.state.email}
                     />
                 </View>
                 <View style={styles.formRow}>
-                    <Text p style={styles.formLabel}>{this.state.birthDate}{'\n'}</Text>
+                    <Text p style={styles.formLabel}>{I18n.t("birthDate")}{'\n'}</Text>
                     <Button style={ styles.formItem } onPress={showDatepicker} title={this.state.date.toLocaleDateString()}></Button>
                     {this.state.show && (
                         <DateTimePicker
@@ -163,7 +154,7 @@ class Questionaire extends Component{
                     )}
                 </View>
                 <View style={styles.formRow}>
-                    <Text p style={styles.formLabel}>{this.state.countryOfOrigin}{'\n'}</Text>
+                    <Text p style={styles.formLabel}>{I18n.t("countryOfOrigin")}{'\n'}</Text>
                     <Picker 
                         style={styles.formItem}
                         selectedValue={this.state.country_of_origin}
@@ -172,7 +163,7 @@ class Questionaire extends Component{
                     </Picker>
                 </View>
                 <View style={styles.formRow}>
-                    <Text p style={styles.formLabel}>{this.state.languageOfPreference}{'\n'}</Text>
+                    <Text p style={styles.formLabel}>{I18n.t("languageOfPreference")}{'\n'}</Text>
                     <Picker 
                         style={styles.formItem}
                         selectedValue={this.state.language_of_preference}
