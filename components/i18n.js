@@ -7,7 +7,7 @@ import es from "../locales/es";
 const locales = RNLocalize.getLocales();
 
 if (Array.isArray(locales)) {
-  I18n.locale = locales[1].languageTag;
+  I18n.locale = locales[0].languageTag;
 }
 
 I18n.fallbacks = true;
