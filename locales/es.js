@@ -30,5 +30,6 @@ export default {
     rate: "Calificar",
     continue: "Continuar",
     recommendation_title: "Recomendaciones de Puerto Plata",
-    recommendations_button: "Dame recomendaciones!"
+    recommendations_button: "Dame recomendaciones!",
+    visit_rate_text: "Visitaste este lugar? Agrega la fecha y hora, luego califícalo!"
 };
