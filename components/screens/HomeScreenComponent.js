@@ -3,14 +3,15 @@ import { Image, View, StyleSheet } from 'react-native'
 import { Text, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
+import I18n from '../i18n'
+
 class HomeScreen extends Component {
     constructor(props){
         super(props);
         const { users, places } = props;
         this.state = {
-            user: this.props.users,
+            user: this.props.users
 
-            recommendations_button: "Give me recommendations!"
         }
     }
 
@@ -22,12 +23,12 @@ class HomeScreen extends Component {
         return(
             <View style={styles.container}>
                     <Text>{this.state.user.users[0].display_name}</Text>
-                    <Text h4>Puerto Plata - Recommendations</Text>
+                    <Text h4>{I18n.t("recommendation_title")}</Text>
 
                 <Image source={{uri: 'https://cdn0.iconfinder.com/data/icons/tutor-icon-set/512/Backpack_icon-512.png'}}
                     style={{width: 150, height: 150, marginBottom: 50, marginTop: 30 }} />
                 <Button
-                    title= {this.state.recommendations_button}
+                    title= {I18n.t("recommendations_button")}
                     onPress={ () => this.props.navigation.navigate('RecommendationScreen')}
                     type="solid"
                 />

@@ -28,5 +28,7 @@ export default {
     warm: "Cálido",
     in: "en",
     rate: "Calificar",
-    continue: "Continuar"
+    continue: "Continuar",
+    recommendation_title: "Recomendaciones de Puerto Plata",
+    recommendations_button: "Dame recomendaciones!"
 };
