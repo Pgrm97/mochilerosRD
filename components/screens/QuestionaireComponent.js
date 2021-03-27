@@ -63,8 +63,6 @@ class Questionaire extends Component{
 
         username = username.split('@')[0] + '-' + username.split('@')[1];
 
-        console.log(username);
-
         database.ref('users/' + username).set({
             display_name: this.state.display_name,
             email: this.state.email,
@@ -181,9 +179,7 @@ class Questionaire extends Component{
                 <Button
                     title="Continue"
                     onPress={ () => {
-                        if(!this.checkTextInput()){
-                            console.log(I18n.locale = 'es');
-                            
+                        if(!this.checkTextInput()){                            
                             this.validateFirebase();                     
                             this.props.navigation.navigate('Description');
                         }
