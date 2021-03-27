@@ -49,7 +49,7 @@ class PlacesDropdownScreen extends Component {
     uploadRatingToDB = () => {
 
         if(this.state.rating != false){
-            database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.place + "%" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+            database.ref('ratings/' + this.state.user.users[0].id + "%" + this.state.place + "%" + this.state.default_weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
                 userID: this.state.user.users[0].id,
                 placeID: this.state.place,
                 rating: this.state.rating,
@@ -61,7 +61,7 @@ class PlacesDropdownScreen extends Component {
                   console.log(error);
               })
         
-              database.ref('ratings_organized/' + this.state.user.users[0].id + "/" + this.state.place + "/" + this.state.weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
+              database.ref('ratings_organized/' + this.state.user.users[0].id + "/" + this.state.place + "/" + this.state.default_weather.toLowerCase() + "-" + this.state.temperature + "-" + this.state.weekend).set({
               userID: this.state.user.users[0].id,
               placeID: this.state.place,
               rating: this.state.rating,
@@ -220,6 +220,7 @@ class PlacesDropdownScreen extends Component {
                 <AirbnbRating 
                     defaultRating={this.state.rating}
                     onFinishRating={this.ratingCompleted}
+                    reviews = {I18n.t("rating_text")}
                     />
                 <View style={{marginBottom: 15, marginTop: 10}}>
                     <Button color="#00008B"
