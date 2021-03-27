@@ -12,7 +12,7 @@ export default {
     enterName: "Please enter your name",
     enterEmail: "Please enter an e-mail address",
     //----------------------------------------------
-    descriptionText: "Read the description and imagine you're in this place.",
+    descriptionText: "The description changes. \nRead the description and imagine you're in this place.",
     ratingText: "Then give it a rating.",
     introText: "You're about to see",
     descriptionWord: "a description",
@@ -33,5 +33,7 @@ export default {
     recommendation_title: "Puerto Plata - Recommendations",
     recommendations_button: "Give me recommendations!",
     visit_rate_text: "Did you visit this place? Add the date and rating!",
-    located_in: "Located in"
+    located_in: "Located in",
+    recommendedplaces: "These are the most recommended places for a",
+    rating_text: ['Terrible', 'Bad', 'Okay', 'Good', 'Great']
 };

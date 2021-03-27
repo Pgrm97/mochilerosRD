@@ -88,7 +88,8 @@ class RecommendationScreen extends Component {
         })
         return(
             <ScrollView keyboardDismissMode='on-drag' style={ styles.container }>
-                <Text h3 style={textStyles.bold}>{this.contextByLocale(I18n.locale)}</Text>
+                <Text style={{fontWeight: "bold"}}>{I18n.t("recommendedplaces")}</Text>
+                <Text style={textStyles.bold}>{this.contextByLocale(I18n.locale)}</Text>
                 {cards}
             </ScrollView>            
         );

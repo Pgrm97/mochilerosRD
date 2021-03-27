@@ -13,7 +13,7 @@ export default {
     enterName: "Por favor, introduzca un nombre",
     enterEmail: "Por favor, introduzca un correo electrónico",
     //----------------------------------------------
-    descriptionText: "Lee la descripción e imagina que estás en este lugar.",
+    descriptionText: "La descripción cambia cada cierto tiempo. \nLee la descripción e imagina que estás en este lugar.",
     ratingText: "Luego califícalo.",
     introText: "Estas a punto de ver",
     descriptionWord: "una descripción",
@@ -34,5 +34,7 @@ export default {
     visit_rate_text: "Visitaste este lugar? Agrega la fecha y hora, luego califícalo!",
     located_in: "Ubicado en",
     es_un: "Es un",
-    es_una: "Es una"
+    es_una: "Es una",
+    recommendedplaces: "Estos son los lugares más recomendados para un",
+    rating_text: ['Terrible', 'Mal', 'Normal', 'Bueno', 'Excelente']
 };
