@@ -35,5 +35,6 @@ export default {
     visit_rate_text: "Did you visit this place? Add the date and rating!",
     located_in: "Located in",
     recommendedplaces: "These are the most recommended places for a",
-    rating_text: ['Terrible', 'Bad', 'Okay', 'Good', 'Great']
+    rating_text: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
+    directions: "Directions"
 };

@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native'
 import { Card, Text, Rating, AirbnbRating, Button } from 'react-native-elements'
 import * as Linking from 'expo-linking'
 
+import I18n from './i18n'
+
 var openMaps = (url) => {
   Linking.openURL(url);
 };
@@ -25,7 +27,7 @@ function RecommendationCard(props) {
                 </Text>
                 {props.lat && 
                   <Button
-                    title="Google Maps"
+                    title={I18n.t("directions")}
                     onPress={ () => openMaps("https://www.google.com/maps/search/?api=1&query=" + props.lat + "," + props.lng + "&query_place_id=" + props.maps_place_id) }
                     type="solid"
                   />

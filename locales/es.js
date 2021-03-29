@@ -36,5 +36,6 @@ export default {
     es_un: "Es un",
     es_una: "Es una",
     recommendedplaces: "Estos son los lugares más recomendados para un",
-    rating_text: ['Terrible', 'Mal', 'Normal', 'Bueno', 'Excelente']
+    rating_text: ['Terrible', 'Mal', 'Normal', 'Bueno', 'Excelente'],
+    directions: "Direcciones"
 };
